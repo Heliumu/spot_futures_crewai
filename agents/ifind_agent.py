@@ -1,12 +1,17 @@
-# agents/ifind_agent_complete.py
+# agents/ifind_agent_fixed.py
 from crewai import Agent
 from llm_config.factory import get_llm
-from tools.edt_data_tool_enhanced import EnhancedEDBDataTool
-
-
-
-# 关键：创建工具实例
-edt_tool_instance = EnhancedEDBDataTool()
+from tools.ifind_tool import (
+    BasisAnalysisTool,
+    InventoryAnalysisTool,
+    SupplyDemandAnalysisTool,
+    ApparentDemandAnalysisTool,
+    DemandForecastingTool,
+    MacroEconomicAnalysisTool,
+    PriceTechnicalAnalysisTool,
+    QuantStrategyAnalysisTool,
+    TradingAnalysisTool
+)
 
 # 基差分析师
 basis_analyst = Agent(
@@ -21,7 +26,7 @@ basis_analyst = Agent(
     verbose=True,
     allow_delegation=False,
     llm=get_llm("zhipuai"),
-    tools=[edt_tool_instance.get_basis_analysis_data],  # ✅ 绑定方法
+    tools=[BasisAnalysisTool()],  # ✅ 传递工具实例
     max_iter=3
 )
 
@@ -38,7 +43,7 @@ inventory_analyst = Agent(
     verbose=True,
     allow_delegation=False,
     llm=get_llm("deepseek"),
-    tools=[edt_tool_instance.get_inventory_analysis_data],  # ✅ 绑定方法
+    tools=[InventoryAnalysisTool()],  # ✅ 传递工具实例
     max_iter=3
 )
 
@@ -56,9 +61,9 @@ supply_demand_analyst = Agent(
     allow_delegation=False,
     llm=get_llm("qwen"),
     tools=[
-        edt_tool_instance.get_supply_demand_analysis_data,
-        edt_tool_instance.get_apparent_demand_analysis_data,
-        edt_tool_instance.get_demand_forecasting_data
+        SupplyDemandAnalysisTool(),
+        ApparentDemandAnalysisTool(),
+        DemandForecastingTool()
     ],
     max_iter=3
 )
@@ -76,7 +81,7 @@ macro_analyst = Agent(
     verbose=True,
     allow_delegation=False,
     llm=get_llm("zhipuai"),
-    tools=[edt_tool_instance.get_macro_economic_data],
+    tools=[MacroEconomicAnalysisTool()],
     max_iter=3
 )
 
@@ -92,7 +97,7 @@ price_technical_analyst = Agent(
     verbose=True,
     allow_delegation=False,
     llm=get_llm("deepseek"),
-    tools=[edt_tool_instance.get_price_technical_data],
+    tools=[PriceTechnicalAnalysisTool()],
     max_iter=3
 )
 
@@ -108,7 +113,7 @@ quant_strategist = Agent(
     verbose=True,
     allow_delegation=False,
     llm=get_llm("qwen"),
-    tools=[edt_tool_instance.get_quant_strategy_data],
+    tools=[QuantStrategyAnalysisTool()],
     max_iter=3
 )
 
@@ -124,6 +129,6 @@ trading_analyst = Agent(
     verbose=True,
     allow_delegation=False,
     llm=get_llm("deepseek"),
-    tools=[edt_tool_instance.get_trading_data],
+    tools=[TradingAnalysisTool()],
     max_iter=3
 )

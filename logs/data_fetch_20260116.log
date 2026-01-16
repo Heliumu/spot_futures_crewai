@@ -94,3 +94,558 @@
 2026-01-16 02:05:41,615 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (2): telemetry.crewai.com:4319
 2026-01-16 02:05:42,466 - urllib3.connectionpool - DEBUG - https://telemetry.crewai.com:4319 "POST /v1/traces HTTP/1.1" 200 2
 2026-01-16 09:11:55,926 - config.logging_config - INFO - 调试版分析工作流初始化完成
+2026-01-16 10:07:33,238 - config.logging_config - INFO - 调试版分析工作流初始化完成
+2026-01-16 10:07:56,790 - config.logging_config - INFO - 收到用户请求: 沥青 近半年仓库数据分析
+2026-01-16 10:07:56,792 - config.logging_config - INFO - 意图解析完成: {'commodity': '沥青', 'time_range': {'start_date': '2025-07-20', 'end_date': '2026-01-16'}, 'keywords': [], 'task_configs': [], 'original_input': '沥青 近半年仓库数据分析'}
+2026-01-16 10:07:56,792 - config.logging_config - WARNING - 未能识别有效的分析任务，请提供更具体的分析需求。
+2026-01-16 10:14:59,751 - config.logging_config - INFO - 调试版分析工作流初始化完成
+2026-01-16 10:15:19,560 - config.logging_config - INFO - 收到用户请求: 沥青 近半年仓库数据分析
+2026-01-16 10:15:19,562 - config.logging_config - INFO - 意图解析完成: {'commodity': '沥青', 'time_range': {'start_date': '2025-07-20', 'end_date': '2026-01-16'}, 'keywords': [], 'task_configs': [], 'original_input': '沥青 近半年仓库数据分析'}
+2026-01-16 10:15:19,562 - config.logging_config - WARNING - 未能识别有效的分析任务，请提供更具体的分析需求。
+2026-01-16 10:16:06,363 - config.logging_config - INFO - 调试版分析工作流初始化完成
+2026-01-16 10:16:07,971 - config.logging_config - INFO - 收到用户请求: 沥青 半年库存分析
+2026-01-16 10:16:07,973 - config.logging_config - INFO - 意图解析完成: {'commodity': '沥青', 'time_range': {'start_date': '2025-07-20', 'end_date': '2026-01-16'}, 'keywords': ['inventory'], 'task_configs': [{'type': 'inventory'}], 'original_input': '沥青 半年库存分析'}
+2026-01-16 10:16:07,974 - config.logging_config - INFO - 创建了 1 个分析任务
+2026-01-16 10:16:07,984 - config.logging_config - INFO - 开始执行分析流程
+2026-01-16 10:16:08,332 - openai._base_client - DEBUG - Request options: {'method': 'post', 'url': '/chat/completions', 'files': None, 'idempotency_key': 'stainless-python-retry-048a7745-c1c8-42bb-82fa-11a5e603014e', 'json_data': {'messages': [{'role': 'system', 'content': 'You are 产业链库存研究员. 你是一位专业的库存分析师，擅长从社会库存、工厂库存、\n    期货仓单等多个维度分析库存状况。你能准确判断库存拐点，\n    评估库存压力，为投资决策提供重要参考。\n    \n    现在你可以直接调用iFinD的权威库存数据进行分析。\n    \nYour personal goal is: 分析指定商品的库存结构和动态变化，评估库存对价格的影响\nYou ONLY have access to the following tools, and should NEVER make up tools that are not listed here:\n\nTool Name: 获取EDB数据用于库存分析\nTool Arguments: {\'start_date\': {\'description\': None, \'type\': \'str\'}, \'end_date\': {\'description\': None, \'type\': \'str\'}}\nTool Description: 获取库存分析所需的数据\n\nIMPORTANT: Use the following format in your response:\n\n```\nThought: you should always think about what to do\nAction: the action to take, only one name of [获取EDB数据用于库存分析], just the name, exactly as it\'s written.\nAction Input: the input to the action, just a simple JSON object, enclosed in curly braces, using " to wrap keys and values.\nObservation: the result of the action\n```\n\nOnce all necessary information is gathered, return the following format:\n\n```\nThought: I now know the final answer\nFinal Answer: the final answer to the original input question\n```'}, {'role': 'user', 'content': "\nCurrent Task: \n你是一位专业的库存分析师，专注于【沥青】。\n请对沥青进行库存分析。\n\n请严格按照以下步骤执行：\n1. **获取库存数据**：使用 '获取EDB数据用于库存分析' 工具获取 沥青 从 2025-07-20 到 2026-01-16 的库存相关数据。\n   - start_date: 2025-07-20\n   - end_date: 2026-01-16\n\n2. **执行分析**：基于获取到的数据，分析厂家库存、社会库存、期货仓单等维度。\n\n3. **撰写报告**：将分析结果整理成专业的库存分析报告。\n\n\nThis is the expected criteria for your final answer: \n# 沥青 库存分析报告\n\n## 分析时间\n2026-01-16 10:16:07\n\n## 一、核心观点\n[在此处填写你的核心判断，1-2句话]\n\n## 二、库存总览\n- **总量与变化**: [社会库存总量及周度/月度变化]\n- **主要集散地**: [列出库存量排名靠前的仓库或港口]\n\n## 三、产业链库存动态\n- **上游情况**: [原料库存状态]\n- **中游情况**: [贸易商库存及心态]\n- **下游情况**: [加工企业原料库存水平]\n\n## 四、市场展望与策略\n- **库存趋势预判**: [对未来库存变化的判断]\n- **价格影响评估**: [库存变化对价格的影响]\n- **投资机会提示**: [基于分析发现的潜在机会]\n- **风险提示**: [需要关注的风险因素]\n\nyou MUST return the actual complete content as the final answer, not a summary.\n\nBegin! This is VERY important to you, use the tools available and give your best Final Answer, your job depends on it!\n\nThought:"}], 'model': 'deepseek-chat', 'temperature': 0.7}}
+2026-01-16 10:16:08,366 - openai._base_client - DEBUG - Sending HTTP Request: POST https://api.deepseek.com/chat/completions
+2026-01-16 10:16:08,367 - httpcore.connection - DEBUG - connect_tcp.started host='api.deepseek.com' port=443 local_address=None timeout=5.0 socket_options=None
+2026-01-16 10:16:08,418 - httpcore.connection - DEBUG - connect_tcp.complete return_value=<httpcore._backends.sync.SyncStream object at 0x11bc684a0>
+2026-01-16 10:16:08,418 - httpcore.connection - DEBUG - start_tls.started ssl_context=<ssl.SSLContext object at 0x11b652950> server_hostname='api.deepseek.com' timeout=5.0
+2026-01-16 10:16:08,462 - httpcore.connection - DEBUG - start_tls.complete return_value=<httpcore._backends.sync.SyncStream object at 0x11bb93e90>
+2026-01-16 10:16:08,462 - httpcore.http11 - DEBUG - send_request_headers.started request=<Request [b'POST']>
+2026-01-16 10:16:08,463 - httpcore.http11 - DEBUG - send_request_headers.complete
+2026-01-16 10:16:08,463 - httpcore.http11 - DEBUG - send_request_body.started request=<Request [b'POST']>
+2026-01-16 10:16:08,463 - httpcore.http11 - DEBUG - send_request_body.complete
+2026-01-16 10:16:08,463 - httpcore.http11 - DEBUG - receive_response_headers.started request=<Request [b'POST']>
+2026-01-16 10:16:08,518 - httpcore.http11 - DEBUG - receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Fri, 16 Jan 2026 02:16:08 GMT'), (b'Content-Type', b'application/json'), (b'Transfer-Encoding', b'chunked'), (b'Connection', b'keep-alive'), (b'Set-Cookie', b'HWWAFSESTIME=1768529764294; path=/'), (b'Set-Cookie', b'HWWAFSESID=bce22e56c6d04279ff; path=/'), (b'vary', b'origin, access-control-request-method, access-control-request-headers'), (b'access-control-allow-credentials', b'true'), (b'x-ds-trace-id', b'17c22e4aee926d1827a0afabebd5dd7b'), (b'Strict-Transport-Security', b'max-age=31536000; includeSubDomains; preload'), (b'X-Content-Type-Options', b'nosniff'), (b'Server', b'CW'), (b'Content-Encoding', b'gzip')])
+2026-01-16 10:16:08,520 - httpx - INFO - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+2026-01-16 10:16:08,520 - httpcore.http11 - DEBUG - receive_response_body.started request=<Request [b'POST']>
+2026-01-16 10:16:10,228 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): telemetry.crewai.com:4319
+2026-01-16 10:16:12,068 - httpcore.http11 - DEBUG - receive_response_body.complete
+2026-01-16 10:16:12,068 - httpcore.http11 - DEBUG - response_closed.started
+2026-01-16 10:16:12,068 - httpcore.http11 - DEBUG - response_closed.complete
+2026-01-16 10:16:12,068 - openai._base_client - DEBUG - HTTP Response: POST https://api.deepseek.com/chat/completions "200 OK" Headers([('date', 'Fri, 16 Jan 2026 02:16:08 GMT'), ('content-type', 'application/json'), ('transfer-encoding', 'chunked'), ('connection', 'keep-alive'), ('set-cookie', 'HWWAFSESTIME=1768529764294; path=/'), ('set-cookie', 'HWWAFSESID=bce22e56c6d04279ff; path=/'), ('vary', 'origin, access-control-request-method, access-control-request-headers'), ('access-control-allow-credentials', 'true'), ('x-ds-trace-id', '17c22e4aee926d1827a0afabebd5dd7b'), ('strict-transport-security', 'max-age=31536000; includeSubDomains; preload'), ('x-content-type-options', 'nosniff'), ('server', 'CW'), ('content-encoding', 'gzip')])
+2026-01-16 10:16:12,069 - openai._base_client - DEBUG - request_id: None
+2026-01-16 10:16:12,093 - openai._base_client - DEBUG - Request options: {'method': 'post', 'url': '/chat/completions', 'files': None, 'idempotency_key': 'stainless-python-retry-0d963fe6-8273-4109-85e6-3f73fd76ce64', 'json_data': {'messages': [{'role': 'system', 'content': 'You are 产业链库存研究员. 你是一位专业的库存分析师，擅长从社会库存、工厂库存、\n    期货仓单等多个维度分析库存状况。你能准确判断库存拐点，\n    评估库存压力，为投资决策提供重要参考。\n    \n    现在你可以直接调用iFinD的权威库存数据进行分析。\n    \nYour personal goal is: 分析指定商品的库存结构和动态变化，评估库存对价格的影响\nYou ONLY have access to the following tools, and should NEVER make up tools that are not listed here:\n\nTool Name: 获取EDB数据用于库存分析\nTool Arguments: {\'start_date\': {\'description\': None, \'type\': \'str\'}, \'end_date\': {\'description\': None, \'type\': \'str\'}}\nTool Description: 获取库存分析所需的数据\n\nIMPORTANT: Use the following format in your response:\n\n```\nThought: you should always think about what to do\nAction: the action to take, only one name of [获取EDB数据用于库存分析], just the name, exactly as it\'s written.\nAction Input: the input to the action, just a simple JSON object, enclosed in curly braces, using " to wrap keys and values.\nObservation: the result of the action\n```\n\nOnce all necessary information is gathered, return the following format:\n\n```\nThought: I now know the final answer\nFinal Answer: the final answer to the original input question\n```'}, {'role': 'user', 'content': "\nCurrent Task: \n你是一位专业的库存分析师，专注于【沥青】。\n请对沥青进行库存分析。\n\n请严格按照以下步骤执行：\n1. **获取库存数据**：使用 '获取EDB数据用于库存分析' 工具获取 沥青 从 2025-07-20 到 2026-01-16 的库存相关数据。\n   - start_date: 2025-07-20\n   - end_date: 2026-01-16\n\n2. **执行分析**：基于获取到的数据，分析厂家库存、社会库存、期货仓单等维度。\n\n3. **撰写报告**：将分析结果整理成专业的库存分析报告。\n\n\nThis is the expected criteria for your final answer: \n# 沥青 库存分析报告\n\n## 分析时间\n2026-01-16 10:16:07\n\n## 一、核心观点\n[在此处填写你的核心判断，1-2句话]\n\n## 二、库存总览\n- **总量与变化**: [社会库存总量及周度/月度变化]\n- **主要集散地**: [列出库存量排名靠前的仓库或港口]\n\n## 三、产业链库存动态\n- **上游情况**: [原料库存状态]\n- **中游情况**: [贸易商库存及心态]\n- **下游情况**: [加工企业原料库存水平]\n\n## 四、市场展望与策略\n- **库存趋势预判**: [对未来库存变化的判断]\n- **价格影响评估**: [库存变化对价格的影响]\n- **投资机会提示**: [基于分析发现的潜在机会]\n- **风险提示**: [需要关注的风险因素]\n\nyou MUST return the actual complete content as the final answer, not a summary.\n\nBegin! This is VERY important to you, use the tools available and give your best Final Answer, your job depends on it!\n\nThought:"}, {'role': 'assistant', 'content': 'Thought: 我需要先获取沥青从2025-07-20到2026-01-16的库存相关数据，然后基于这些数据进行分析并撰写报告。\nAction: 获取EDB数据用于库存分析\nAction Input: {"start_date": "2025-07-20", "end_date": "2026-01-16"}\nObservation: \nI encountered an error while trying to use the tool. This was the error: EnhancedEDBDataTool.get_inventory_analysis_data() missing 1 required positional argument: \'self\'.\n Tool 获取EDB数据用于库存分析 accepts these inputs: Tool Name: 获取EDB数据用于库存分析\nTool Arguments: {\'start_date\': {\'description\': None, \'type\': \'str\'}, \'end_date\': {\'description\': None, \'type\': \'str\'}}\nTool Description: 获取库存分析所需的数据.\nMoving on then. I MUST either use a tool (use one at time) OR give my best final answer not both at the same time. When responding, I must use the following format:\n\n```\nThought: you should always think about what to do\nAction: the action to take, should be one of [获取EDB数据用于库存分析]\nAction Input: the input to the action, dictionary enclosed in curly braces\nObservation: the result of the action\n```\nThis Thought/Action/Action Input/Result can repeat N times. Once I know the final answer, I must return the following format:\n\n```\nThought: I now can give a great answer\nFinal Answer: Your final answer must be the great and the most complete as possible, it must be outcome described\n\n```'}], 'model': 'deepseek-chat', 'temperature': 0.7}}
+2026-01-16 10:16:12,096 - openai._base_client - DEBUG - Sending HTTP Request: POST https://api.deepseek.com/chat/completions
+2026-01-16 10:16:12,097 - httpcore.http11 - DEBUG - send_request_headers.started request=<Request [b'POST']>
+2026-01-16 10:16:12,099 - httpcore.http11 - DEBUG - send_request_headers.complete
+2026-01-16 10:16:12,101 - httpcore.http11 - DEBUG - send_request_body.started request=<Request [b'POST']>
+2026-01-16 10:16:12,101 - httpcore.http11 - DEBUG - send_request_body.complete
+2026-01-16 10:16:12,102 - httpcore.http11 - DEBUG - receive_response_headers.started request=<Request [b'POST']>
+2026-01-16 10:16:12,157 - httpcore.http11 - DEBUG - receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Fri, 16 Jan 2026 02:16:12 GMT'), (b'Content-Type', b'application/json'), (b'Transfer-Encoding', b'chunked'), (b'Connection', b'keep-alive'), (b'vary', b'origin, access-control-request-method, access-control-request-headers'), (b'access-control-allow-credentials', b'true'), (b'x-ds-trace-id', b'69cb68ac595ae569b8251518a58bba84'), (b'Strict-Transport-Security', b'max-age=31536000; includeSubDomains; preload'), (b'X-Content-Type-Options', b'nosniff'), (b'Server', b'CW'), (b'Content-Encoding', b'gzip')])
+2026-01-16 10:16:12,158 - httpx - INFO - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+2026-01-16 10:16:12,158 - httpcore.http11 - DEBUG - receive_response_body.started request=<Request [b'POST']>
+2026-01-16 10:16:14,403 - urllib3.connectionpool - DEBUG - https://telemetry.crewai.com:4319 "POST /v1/traces HTTP/1.1" 200 2
+2026-01-16 10:16:19,602 - urllib3.connectionpool - DEBUG - https://telemetry.crewai.com:4319 "POST /v1/traces HTTP/1.1" 200 2
+2026-01-16 10:16:52,820 - httpcore.http11 - DEBUG - receive_response_body.complete
+2026-01-16 10:16:52,820 - httpcore.http11 - DEBUG - response_closed.started
+2026-01-16 10:16:52,820 - httpcore.http11 - DEBUG - response_closed.complete
+2026-01-16 10:16:52,821 - openai._base_client - DEBUG - HTTP Response: POST https://api.deepseek.com/chat/completions "200 OK" Headers({'date': 'Fri, 16 Jan 2026 02:16:12 GMT', 'content-type': 'application/json', 'transfer-encoding': 'chunked', 'connection': 'keep-alive', 'vary': 'origin, access-control-request-method, access-control-request-headers', 'access-control-allow-credentials': 'true', 'x-ds-trace-id': '69cb68ac595ae569b8251518a58bba84', 'strict-transport-security': 'max-age=31536000; includeSubDomains; preload', 'x-content-type-options': 'nosniff', 'server': 'CW', 'content-encoding': 'gzip'})
+2026-01-16 10:16:52,821 - openai._base_client - DEBUG - request_id: None
+2026-01-16 10:16:52,832 - config.logging_config - INFO - 分析流程完成
+2026-01-16 10:16:52,842 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (2): telemetry.crewai.com:4319
+2026-01-16 10:16:53,450 - urllib3.connectionpool - DEBUG - https://telemetry.crewai.com:4319 "POST /v1/traces HTTP/1.1" 200 2
+2026-01-16 10:22:01,450 - config.logging_config - INFO - 调试版分析工作流初始化完成
+2026-01-16 10:22:24,352 - config.logging_config - INFO - 调试版分析工作流初始化完成
+2026-01-16 10:22:27,737 - config.logging_config - INFO - 收到用户请求: 沥青 半年库存分析
+2026-01-16 10:22:27,739 - config.logging_config - INFO - 意图解析完成: {'commodity': '沥青', 'time_range': {'start_date': '2025-07-20', 'end_date': '2026-01-16'}, 'keywords': ['inventory'], 'task_configs': [{'type': 'inventory'}], 'original_input': '沥青 半年库存分析'}
+2026-01-16 10:22:27,740 - config.logging_config - INFO - 创建了 1 个分析任务
+2026-01-16 10:22:27,744 - config.logging_config - INFO - 开始执行分析流程
+2026-01-16 10:22:27,922 - openai._base_client - DEBUG - Request options: {'method': 'post', 'url': '/chat/completions', 'files': None, 'idempotency_key': 'stainless-python-retry-2f762cc2-4032-4874-aa5c-f31553cca340', 'json_data': {'messages': [{'role': 'system', 'content': 'You are 产业链库存研究员. 你是一位专业的库存分析师，擅长从社会库存、工厂库存、\n    期货仓单等多个维度分析库存状况。你能准确判断库存拐点，\n    评估库存压力，为投资决策提供重要参考。\n    \n    现在你可以直接调用iFinD的权威库存数据进行分析。\n    \nYour personal goal is: 分析指定商品的库存结构和动态变化，评估库存对价格的影响\nYou ONLY have access to the following tools, and should NEVER make up tools that are not listed here:\n\nTool Name: 获取EDB数据用于库存分析\nTool Arguments: {\'start_date\': {\'description\': None, \'type\': \'str\'}, \'end_date\': {\'description\': None, \'type\': \'str\'}}\nTool Description: 获取库存分析所需的数据\n\nIMPORTANT: Use the following format in your response:\n\n```\nThought: you should always think about what to do\nAction: the action to take, only one name of [获取EDB数据用于库存分析], just the name, exactly as it\'s written.\nAction Input: the input to the action, just a simple JSON object, enclosed in curly braces, using " to wrap keys and values.\nObservation: the result of the action\n```\n\nOnce all necessary information is gathered, return the following format:\n\n```\nThought: I now know the final answer\nFinal Answer: the final answer to the original input question\n```'}, {'role': 'user', 'content': "\nCurrent Task: \n你是一位专业的库存分析师，专注于【沥青】。\n请对沥青进行库存分析。\n\n请严格按照以下步骤执行：\n1. **获取库存数据**：使用 '获取EDB数据用于库存分析' 工具获取 沥青 从 2025-07-20 到 2026-01-16 的库存相关数据。\n   - start_date: 2025-07-20\n   - end_date: 2026-01-16\n\n2. **执行分析**：基于获取到的数据，分析厂家库存、社会库存、期货仓单等维度。\n\n3. **撰写报告**：将分析结果整理成专业的库存分析报告。\n\n\nThis is the expected criteria for your final answer: \n# 沥青 库存分析报告\n\n## 分析时间\n2026-01-16 10:22:27\n\n## 一、核心观点\n[在此处填写你的核心判断，1-2句话]\n\n## 二、库存总览\n- **总量与变化**: [社会库存总量及周度/月度变化]\n- **主要集散地**: [列出库存量排名靠前的仓库或港口]\n\n## 三、产业链库存动态\n- **上游情况**: [原料库存状态]\n- **中游情况**: [贸易商库存及心态]\n- **下游情况**: [加工企业原料库存水平]\n\n## 四、市场展望与策略\n- **库存趋势预判**: [对未来库存变化的判断]\n- **价格影响评估**: [库存变化对价格的影响]\n- **投资机会提示**: [基于分析发现的潜在机会]\n- **风险提示**: [需要关注的风险因素]\n\nyou MUST return the actual complete content as the final answer, not a summary.\n\nBegin! This is VERY important to you, use the tools available and give your best Final Answer, your job depends on it!\n\nThought:"}], 'model': 'deepseek-chat', 'temperature': 0.7}}
+2026-01-16 10:22:27,944 - openai._base_client - DEBUG - Sending HTTP Request: POST https://api.deepseek.com/chat/completions
+2026-01-16 10:22:27,944 - httpcore.connection - DEBUG - connect_tcp.started host='api.deepseek.com' port=443 local_address=None timeout=5.0 socket_options=None
+2026-01-16 10:22:27,991 - httpcore.connection - DEBUG - connect_tcp.complete return_value=<httpcore._backends.sync.SyncStream object at 0x11bc74230>
+2026-01-16 10:22:27,992 - httpcore.connection - DEBUG - start_tls.started ssl_context=<ssl.SSLContext object at 0x11b656950> server_hostname='api.deepseek.com' timeout=5.0
+2026-01-16 10:22:28,038 - httpcore.connection - DEBUG - start_tls.complete return_value=<httpcore._backends.sync.SyncStream object at 0x11bc74470>
+2026-01-16 10:22:28,038 - httpcore.http11 - DEBUG - send_request_headers.started request=<Request [b'POST']>
+2026-01-16 10:22:28,039 - httpcore.http11 - DEBUG - send_request_headers.complete
+2026-01-16 10:22:28,039 - httpcore.http11 - DEBUG - send_request_body.started request=<Request [b'POST']>
+2026-01-16 10:22:28,039 - httpcore.http11 - DEBUG - send_request_body.complete
+2026-01-16 10:22:28,039 - httpcore.http11 - DEBUG - receive_response_headers.started request=<Request [b'POST']>
+2026-01-16 10:22:28,108 - httpcore.http11 - DEBUG - receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Fri, 16 Jan 2026 02:22:28 GMT'), (b'Content-Type', b'application/json'), (b'Transfer-Encoding', b'chunked'), (b'Connection', b'keep-alive'), (b'Set-Cookie', b'HWWAFSESTIME=1768530145333; path=/'), (b'Set-Cookie', b'HWWAFSESID=bf73bdc2b448e02e92; path=/'), (b'vary', b'origin, access-control-request-method, access-control-request-headers'), (b'access-control-allow-credentials', b'true'), (b'x-ds-trace-id', b'cdbd5a22274732075d2790e9903b4276'), (b'Strict-Transport-Security', b'max-age=31536000; includeSubDomains; preload'), (b'X-Content-Type-Options', b'nosniff'), (b'Server', b'CW'), (b'Content-Encoding', b'gzip')])
+2026-01-16 10:22:28,110 - httpx - INFO - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+2026-01-16 10:22:28,110 - httpcore.http11 - DEBUG - receive_response_body.started request=<Request [b'POST']>
+2026-01-16 10:22:28,125 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): telemetry.crewai.com:4319
+2026-01-16 10:22:28,707 - urllib3.connectionpool - DEBUG - https://telemetry.crewai.com:4319 "POST /v1/traces HTTP/1.1" 200 2
+2026-01-16 10:23:12,500 - httpcore.http11 - DEBUG - receive_response_body.complete
+2026-01-16 10:23:12,500 - httpcore.http11 - DEBUG - response_closed.started
+2026-01-16 10:23:12,501 - httpcore.http11 - DEBUG - response_closed.complete
+2026-01-16 10:23:12,501 - openai._base_client - DEBUG - HTTP Response: POST https://api.deepseek.com/chat/completions "200 OK" Headers([('date', 'Fri, 16 Jan 2026 02:22:28 GMT'), ('content-type', 'application/json'), ('transfer-encoding', 'chunked'), ('connection', 'keep-alive'), ('set-cookie', 'HWWAFSESTIME=1768530145333; path=/'), ('set-cookie', 'HWWAFSESID=bf73bdc2b448e02e92; path=/'), ('vary', 'origin, access-control-request-method, access-control-request-headers'), ('access-control-allow-credentials', 'true'), ('x-ds-trace-id', 'cdbd5a22274732075d2790e9903b4276'), ('strict-transport-security', 'max-age=31536000; includeSubDomains; preload'), ('x-content-type-options', 'nosniff'), ('server', 'CW'), ('content-encoding', 'gzip')])
+2026-01-16 10:23:12,501 - openai._base_client - DEBUG - request_id: None
+2026-01-16 10:23:12,514 - config.logging_config - INFO - 分析流程完成
+2026-01-16 10:23:12,522 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (2): telemetry.crewai.com:4319
+2026-01-16 10:23:13,128 - urllib3.connectionpool - DEBUG - https://telemetry.crewai.com:4319 "POST /v1/traces HTTP/1.1" 200 2
+2026-01-16 10:24:59,678 - config.logging_config - INFO - 调试版分析工作流初始化完成
+2026-01-16 10:25:07,382 - config.logging_config - INFO - 收到用户请求: 沥青 半年库存分析
+2026-01-16 10:25:07,384 - config.logging_config - INFO - 意图解析完成: {'commodity': '沥青', 'time_range': {'start_date': '2025-07-20', 'end_date': '2026-01-16'}, 'keywords': ['inventory'], 'task_configs': [{'type': 'inventory'}], 'original_input': '沥青 半年库存分析'}
+2026-01-16 10:25:07,384 - config.logging_config - INFO - 创建了 1 个分析任务
+2026-01-16 10:25:07,389 - config.logging_config - INFO - 开始执行分析流程
+2026-01-16 10:25:07,395 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): app.crewai.com:443
+2026-01-16 10:25:08,779 - urllib3.connectionpool - DEBUG - https://app.crewai.com:443 "POST /crewai_plus/api/v1/tracing/ephemeral/batches HTTP/1.1" 201 515
+2026-01-16 10:25:08,964 - openai._base_client - DEBUG - Request options: {'method': 'post', 'url': '/chat/completions', 'files': None, 'idempotency_key': 'stainless-python-retry-fe00488e-e2c3-4950-806e-18a4ddd04e3f', 'json_data': {'messages': [{'role': 'system', 'content': 'You are 产业链库存研究员. 你是一位专业的库存分析师，擅长从社会库存、工厂库存、\n    期货仓单等多个维度分析库存状况。你能准确判断库存拐点，\n    评估库存压力，为投资决策提供重要参考。\n    \n    现在你可以直接调用iFinD的权威库存数据进行分析。\n    \nYour personal goal is: 分析指定商品的库存结构和动态变化，评估库存对价格的影响\nYou ONLY have access to the following tools, and should NEVER make up tools that are not listed here:\n\nTool Name: 获取EDB数据用于库存分析\nTool Arguments: {\'start_date\': {\'description\': None, \'type\': \'str\'}, \'end_date\': {\'description\': None, \'type\': \'str\'}}\nTool Description: 获取库存分析所需的数据\n\nIMPORTANT: Use the following format in your response:\n\n```\nThought: you should always think about what to do\nAction: the action to take, only one name of [获取EDB数据用于库存分析], just the name, exactly as it\'s written.\nAction Input: the input to the action, just a simple JSON object, enclosed in curly braces, using " to wrap keys and values.\nObservation: the result of the action\n```\n\nOnce all necessary information is gathered, return the following format:\n\n```\nThought: I now know the final answer\nFinal Answer: the final answer to the original input question\n```'}, {'role': 'user', 'content': "\nCurrent Task: \n你是一位专业的库存分析师，专注于【沥青】。\n请对沥青进行库存分析。\n\n请严格按照以下步骤执行：\n1. **获取库存数据**：使用 '获取EDB数据用于库存分析' 工具获取 沥青 从 2025-07-20 到 2026-01-16 的库存相关数据。\n   - start_date: 2025-07-20\n   - end_date: 2026-01-16\n\n2. **执行分析**：基于获取到的数据，分析厂家库存、社会库存、期货仓单等维度。\n\n3. **撰写报告**：将分析结果整理成专业的库存分析报告。\n\n\nThis is the expected criteria for your final answer: \n# 沥青 库存分析报告\n\n## 分析时间\n2026-01-16 10:25:07\n\n## 一、核心观点\n[在此处填写你的核心判断，1-2句话]\n\n## 二、库存总览\n- **总量与变化**: [社会库存总量及周度/月度变化]\n- **主要集散地**: [列出库存量排名靠前的仓库或港口]\n\n## 三、产业链库存动态\n- **上游情况**: [原料库存状态]\n- **中游情况**: [贸易商库存及心态]\n- **下游情况**: [加工企业原料库存水平]\n\n## 四、市场展望与策略\n- **库存趋势预判**: [对未来库存变化的判断]\n- **价格影响评估**: [库存变化对价格的影响]\n- **投资机会提示**: [基于分析发现的潜在机会]\n- **风险提示**: [需要关注的风险因素]\n\nyou MUST return the actual complete content as the final answer, not a summary.\n\nBegin! This is VERY important to you, use the tools available and give your best Final Answer, your job depends on it!\n\nThought:"}], 'model': 'deepseek-chat', 'temperature': 0.7}}
+2026-01-16 10:25:08,985 - openai._base_client - DEBUG - Sending HTTP Request: POST https://api.deepseek.com/chat/completions
+2026-01-16 10:25:08,986 - httpcore.connection - DEBUG - connect_tcp.started host='api.deepseek.com' port=443 local_address=None timeout=5.0 socket_options=None
+2026-01-16 10:25:09,036 - httpcore.connection - DEBUG - connect_tcp.complete return_value=<httpcore._backends.sync.SyncStream object at 0x1243106e0>
+2026-01-16 10:25:09,037 - httpcore.connection - DEBUG - start_tls.started ssl_context=<ssl.SSLContext object at 0x123cf2950> server_hostname='api.deepseek.com' timeout=5.0
+2026-01-16 10:25:09,084 - httpcore.connection - DEBUG - start_tls.complete return_value=<httpcore._backends.sync.SyncStream object at 0x11ca8cbc0>
+2026-01-16 10:25:09,085 - httpcore.http11 - DEBUG - send_request_headers.started request=<Request [b'POST']>
+2026-01-16 10:25:09,086 - httpcore.http11 - DEBUG - send_request_headers.complete
+2026-01-16 10:25:09,086 - httpcore.http11 - DEBUG - send_request_body.started request=<Request [b'POST']>
+2026-01-16 10:25:09,086 - httpcore.http11 - DEBUG - send_request_body.complete
+2026-01-16 10:25:09,086 - httpcore.http11 - DEBUG - receive_response_headers.started request=<Request [b'POST']>
+2026-01-16 10:25:09,148 - httpcore.http11 - DEBUG - receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Fri, 16 Jan 2026 02:25:09 GMT'), (b'Content-Type', b'application/json'), (b'Transfer-Encoding', b'chunked'), (b'Connection', b'keep-alive'), (b'Set-Cookie', b'HWWAFSESTIME=1768530308175; path=/'), (b'Set-Cookie', b'HWWAFSESID=630138b6ca3e59395d; path=/'), (b'vary', b'origin, access-control-request-method, access-control-request-headers'), (b'access-control-allow-credentials', b'true'), (b'x-ds-trace-id', b'8acddff5b56f71d2d87ca411938b0f83'), (b'Strict-Transport-Security', b'max-age=31536000; includeSubDomains; preload'), (b'X-Content-Type-Options', b'nosniff'), (b'Server', b'CW'), (b'Content-Encoding', b'gzip')])
+2026-01-16 10:25:09,150 - httpx - INFO - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+2026-01-16 10:25:09,150 - httpcore.http11 - DEBUG - receive_response_body.started request=<Request [b'POST']>
+2026-01-16 10:25:12,529 - httpcore.http11 - DEBUG - receive_response_body.complete
+2026-01-16 10:25:12,529 - httpcore.http11 - DEBUG - response_closed.started
+2026-01-16 10:25:12,529 - httpcore.http11 - DEBUG - response_closed.complete
+2026-01-16 10:25:12,529 - openai._base_client - DEBUG - HTTP Response: POST https://api.deepseek.com/chat/completions "200 OK" Headers([('date', 'Fri, 16 Jan 2026 02:25:09 GMT'), ('content-type', 'application/json'), ('transfer-encoding', 'chunked'), ('connection', 'keep-alive'), ('set-cookie', 'HWWAFSESTIME=1768530308175; path=/'), ('set-cookie', 'HWWAFSESID=630138b6ca3e59395d; path=/'), ('vary', 'origin, access-control-request-method, access-control-request-headers'), ('access-control-allow-credentials', 'true'), ('x-ds-trace-id', '8acddff5b56f71d2d87ca411938b0f83'), ('strict-transport-security', 'max-age=31536000; includeSubDomains; preload'), ('x-content-type-options', 'nosniff'), ('server', 'CW'), ('content-encoding', 'gzip')])
+2026-01-16 10:25:12,530 - openai._base_client - DEBUG - request_id: None
+2026-01-16 10:25:12,558 - openai._base_client - DEBUG - Request options: {'method': 'post', 'url': '/chat/completions', 'files': None, 'idempotency_key': 'stainless-python-retry-ba080501-f4e3-4d20-827e-3b45cf503948', 'json_data': {'messages': [{'role': 'system', 'content': 'You are 产业链库存研究员. 你是一位专业的库存分析师，擅长从社会库存、工厂库存、\n    期货仓单等多个维度分析库存状况。你能准确判断库存拐点，\n    评估库存压力，为投资决策提供重要参考。\n    \n    现在你可以直接调用iFinD的权威库存数据进行分析。\n    \nYour personal goal is: 分析指定商品的库存结构和动态变化，评估库存对价格的影响\nYou ONLY have access to the following tools, and should NEVER make up tools that are not listed here:\n\nTool Name: 获取EDB数据用于库存分析\nTool Arguments: {\'start_date\': {\'description\': None, \'type\': \'str\'}, \'end_date\': {\'description\': None, \'type\': \'str\'}}\nTool Description: 获取库存分析所需的数据\n\nIMPORTANT: Use the following format in your response:\n\n```\nThought: you should always think about what to do\nAction: the action to take, only one name of [获取EDB数据用于库存分析], just the name, exactly as it\'s written.\nAction Input: the input to the action, just a simple JSON object, enclosed in curly braces, using " to wrap keys and values.\nObservation: the result of the action\n```\n\nOnce all necessary information is gathered, return the following format:\n\n```\nThought: I now know the final answer\nFinal Answer: the final answer to the original input question\n```'}, {'role': 'user', 'content': "\nCurrent Task: \n你是一位专业的库存分析师，专注于【沥青】。\n请对沥青进行库存分析。\n\n请严格按照以下步骤执行：\n1. **获取库存数据**：使用 '获取EDB数据用于库存分析' 工具获取 沥青 从 2025-07-20 到 2026-01-16 的库存相关数据。\n   - start_date: 2025-07-20\n   - end_date: 2026-01-16\n\n2. **执行分析**：基于获取到的数据，分析厂家库存、社会库存、期货仓单等维度。\n\n3. **撰写报告**：将分析结果整理成专业的库存分析报告。\n\n\nThis is the expected criteria for your final answer: \n# 沥青 库存分析报告\n\n## 分析时间\n2026-01-16 10:25:07\n\n## 一、核心观点\n[在此处填写你的核心判断，1-2句话]\n\n## 二、库存总览\n- **总量与变化**: [社会库存总量及周度/月度变化]\n- **主要集散地**: [列出库存量排名靠前的仓库或港口]\n\n## 三、产业链库存动态\n- **上游情况**: [原料库存状态]\n- **中游情况**: [贸易商库存及心态]\n- **下游情况**: [加工企业原料库存水平]\n\n## 四、市场展望与策略\n- **库存趋势预判**: [对未来库存变化的判断]\n- **价格影响评估**: [库存变化对价格的影响]\n- **投资机会提示**: [基于分析发现的潜在机会]\n- **风险提示**: [需要关注的风险因素]\n\nyou MUST return the actual complete content as the final answer, not a summary.\n\nBegin! This is VERY important to you, use the tools available and give your best Final Answer, your job depends on it!\n\nThought:"}, {'role': 'assistant', 'content': 'Thought: 我需要先获取沥青从2025-07-20到2026-01-16的库存相关数据，然后基于这些数据进行分析并撰写报告。\nAction: 获取EDB数据用于库存分析\nAction Input: {"start_date": "2025-07-20", "end_date": "2026-01-16"}\nObservation: \nI encountered an error while trying to use the tool. This was the error: EnhancedEDBDataTool.get_inventory_analysis_data() missing 1 required positional argument: \'self\'.\n Tool 获取EDB数据用于库存分析 accepts these inputs: Tool Name: 获取EDB数据用于库存分析\nTool Arguments: {\'start_date\': {\'description\': None, \'type\': \'str\'}, \'end_date\': {\'description\': None, \'type\': \'str\'}}\nTool Description: 获取库存分析所需的数据.\nMoving on then. I MUST either use a tool (use one at time) OR give my best final answer not both at the same time. When responding, I must use the following format:\n\n```\nThought: you should always think about what to do\nAction: the action to take, should be one of [获取EDB数据用于库存分析]\nAction Input: the input to the action, dictionary enclosed in curly braces\nObservation: the result of the action\n```\nThis Thought/Action/Action Input/Result can repeat N times. Once I know the final answer, I must return the following format:\n\n```\nThought: I now can give a great answer\nFinal Answer: Your final answer must be the great and the most complete as possible, it must be outcome described\n\n```'}], 'model': 'deepseek-chat', 'temperature': 0.7}}
+2026-01-16 10:25:12,559 - openai._base_client - DEBUG - Sending HTTP Request: POST https://api.deepseek.com/chat/completions
+2026-01-16 10:25:12,560 - httpcore.http11 - DEBUG - send_request_headers.started request=<Request [b'POST']>
+2026-01-16 10:25:12,562 - httpcore.http11 - DEBUG - send_request_headers.complete
+2026-01-16 10:25:12,562 - httpcore.http11 - DEBUG - send_request_body.started request=<Request [b'POST']>
+2026-01-16 10:25:12,563 - httpcore.http11 - DEBUG - send_request_body.complete
+2026-01-16 10:25:12,563 - httpcore.http11 - DEBUG - receive_response_headers.started request=<Request [b'POST']>
+2026-01-16 10:25:12,629 - httpcore.http11 - DEBUG - receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Fri, 16 Jan 2026 02:25:12 GMT'), (b'Content-Type', b'application/json'), (b'Transfer-Encoding', b'chunked'), (b'Connection', b'keep-alive'), (b'vary', b'origin, access-control-request-method, access-control-request-headers'), (b'access-control-allow-credentials', b'true'), (b'x-ds-trace-id', b'8788b2963ba8e149263fe442c6a6c15b'), (b'Strict-Transport-Security', b'max-age=31536000; includeSubDomains; preload'), (b'X-Content-Type-Options', b'nosniff'), (b'Server', b'CW'), (b'Content-Encoding', b'gzip')])
+2026-01-16 10:25:12,630 - httpx - INFO - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+2026-01-16 10:25:12,630 - httpcore.http11 - DEBUG - receive_response_body.started request=<Request [b'POST']>
+2026-01-16 10:25:13,504 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): telemetry.crewai.com:4319
+2026-01-16 10:25:14,113 - urllib3.connectionpool - DEBUG - https://telemetry.crewai.com:4319 "POST /v1/traces HTTP/1.1" 200 2
+2026-01-16 10:25:39,916 - httpcore.http11 - DEBUG - receive_response_body.complete
+2026-01-16 10:25:39,916 - httpcore.http11 - DEBUG - response_closed.started
+2026-01-16 10:25:39,916 - httpcore.http11 - DEBUG - response_closed.complete
+2026-01-16 10:25:39,917 - openai._base_client - DEBUG - HTTP Response: POST https://api.deepseek.com/chat/completions "200 OK" Headers({'date': 'Fri, 16 Jan 2026 02:25:12 GMT', 'content-type': 'application/json', 'transfer-encoding': 'chunked', 'connection': 'keep-alive', 'vary': 'origin, access-control-request-method, access-control-request-headers', 'access-control-allow-credentials': 'true', 'x-ds-trace-id': '8788b2963ba8e149263fe442c6a6c15b', 'strict-transport-security': 'max-age=31536000; includeSubDomains; preload', 'x-content-type-options': 'nosniff', 'server': 'CW', 'content-encoding': 'gzip'})
+2026-01-16 10:25:39,917 - openai._base_client - DEBUG - request_id: None
+2026-01-16 10:25:39,929 - config.logging_config - INFO - 分析流程完成
+2026-01-16 10:25:39,935 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): app.crewai.com:443
+2026-01-16 10:25:41,711 - urllib3.connectionpool - DEBUG - https://app.crewai.com:443 "POST /crewai_plus/api/v1/tracing/ephemeral/batches/d75ef905-b5b5-45a1-a111-1f7b93904c56/events HTTP/1.1" 200 87
+2026-01-16 10:25:41,714 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): app.crewai.com:443
+2026-01-16 10:25:42,532 - urllib3.connectionpool - DEBUG - https://app.crewai.com:443 "PATCH /crewai_plus/api/v1/tracing/ephemeral/batches/d75ef905-b5b5-45a1-a111-1f7b93904c56/finalize HTTP/1.1" 200 519
+2026-01-16 10:25:42,540 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (2): telemetry.crewai.com:4319
+2026-01-16 10:25:43,228 - urllib3.connectionpool - DEBUG - https://telemetry.crewai.com:4319 "POST /v1/traces HTTP/1.1" 200 2
+2026-01-16 10:47:27,839 - config.logging_config - INFO - 调试版分析工作流初始化完成
+2026-01-16 10:47:30,371 - config.logging_config - INFO - 收到用户请求: 沥青 半年库存分析
+2026-01-16 10:47:30,372 - config.logging_config - INFO - 意图解析完成: {'commodity': '沥青', 'time_range': {'start_date': '2025-07-20', 'end_date': '2026-01-16'}, 'keywords': ['inventory'], 'task_configs': [{'type': 'inventory'}], 'original_input': '沥青 半年库存分析'}
+2026-01-16 10:47:30,373 - config.logging_config - INFO - 创建了 1 个分析任务
+2026-01-16 10:47:30,376 - config.logging_config - INFO - 开始执行分析流程
+2026-01-16 10:47:30,381 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): app.crewai.com:443
+2026-01-16 10:47:31,299 - urllib3.connectionpool - DEBUG - https://app.crewai.com:443 "POST /crewai_plus/api/v1/tracing/ephemeral/batches HTTP/1.1" 201 515
+2026-01-16 10:47:31,469 - openai._base_client - DEBUG - Request options: {'method': 'post', 'url': '/chat/completions', 'files': None, 'idempotency_key': 'stainless-python-retry-492361dd-202f-42cb-a025-c4710f120e01', 'json_data': {'messages': [{'role': 'system', 'content': 'You are 产业链库存研究员. 你是一位专业的库存分析师，擅长从社会库存、工厂库存、\n    期货仓单等多个维度分析库存状况。你能准确判断库存拐点，\n    评估库存压力，为投资决策提供重要参考。\n    \n    现在你可以直接调用iFinD的权威库存数据进行分析。\n    \nYour personal goal is: 分析指定商品的库存结构和动态变化，评估库存对价格的影响\nYou ONLY have access to the following tools, and should NEVER make up tools that are not listed here:\n\nTool Name: 获取EDB数据用于库存分析\nTool Arguments: {\'start_date\': {\'description\': None, \'type\': \'str\'}, \'end_date\': {\'description\': None, \'type\': \'str\'}}\nTool Description: 获取库存分析所需的数据\n\nIMPORTANT: Use the following format in your response:\n\n```\nThought: you should always think about what to do\nAction: the action to take, only one name of [获取EDB数据用于库存分析], just the name, exactly as it\'s written.\nAction Input: the input to the action, just a simple JSON object, enclosed in curly braces, using " to wrap keys and values.\nObservation: the result of the action\n```\n\nOnce all necessary information is gathered, return the following format:\n\n```\nThought: I now know the final answer\nFinal Answer: the final answer to the original input question\n```'}, {'role': 'user', 'content': "\nCurrent Task: \n你是一位专业的库存分析师，专注于【沥青】。\n请对沥青进行库存分析。\n\n请严格按照以下步骤执行：\n1. **获取库存数据**：使用 '获取EDB数据用于库存分析' 工具获取 沥青 从 2025-07-20 到 2026-01-16 的库存相关数据。\n   - start_date: 2025-07-20\n   - end_date: 2026-01-16\n\n2. **执行分析**：基于获取到的数据，分析厂家库存、社会库存、期货仓单等维度。\n\n3. **撰写报告**：将分析结果整理成专业的库存分析报告。\n\n\nThis is the expected criteria for your final answer: \n# 沥青 库存分析报告\n\n## 分析时间\n2026-01-16 10:47:30\n\n## 一、核心观点\n[在此处填写你的核心判断，1-2句话]\n\n## 二、库存总览\n- **总量与变化**: [社会库存总量及周度/月度变化]\n- **主要集散地**: [列出库存量排名靠前的仓库或港口]\n\n## 三、产业链库存动态\n- **上游情况**: [原料库存状态]\n- **中游情况**: [贸易商库存及心态]\n- **下游情况**: [加工企业原料库存水平]\n\n## 四、市场展望与策略\n- **库存趋势预判**: [对未来库存变化的判断]\n- **价格影响评估**: [库存变化对价格的影响]\n- **投资机会提示**: [基于分析发现的潜在机会]\n- **风险提示**: [需要关注的风险因素]\n\nyou MUST return the actual complete content as the final answer, not a summary.\n\nBegin! This is VERY important to you, use the tools available and give your best Final Answer, your job depends on it!\n\nThought:"}], 'model': 'deepseek-chat', 'temperature': 0.7}}
+2026-01-16 10:47:31,491 - openai._base_client - DEBUG - Sending HTTP Request: POST https://api.deepseek.com/chat/completions
+2026-01-16 10:47:31,491 - httpcore.connection - DEBUG - connect_tcp.started host='api.deepseek.com' port=443 local_address=None timeout=5.0 socket_options=None
+2026-01-16 10:47:31,538 - httpcore.connection - DEBUG - connect_tcp.complete return_value=<httpcore._backends.sync.SyncStream object at 0x1189e5490>
+2026-01-16 10:47:31,538 - httpcore.connection - DEBUG - start_tls.started ssl_context=<ssl.SSLContext object at 0x1184629d0> server_hostname='api.deepseek.com' timeout=5.0
+2026-01-16 10:47:31,582 - httpcore.connection - DEBUG - start_tls.complete return_value=<httpcore._backends.sync.SyncStream object at 0x1189a7e90>
+2026-01-16 10:47:31,582 - httpcore.http11 - DEBUG - send_request_headers.started request=<Request [b'POST']>
+2026-01-16 10:47:31,583 - httpcore.http11 - DEBUG - send_request_headers.complete
+2026-01-16 10:47:31,583 - httpcore.http11 - DEBUG - send_request_body.started request=<Request [b'POST']>
+2026-01-16 10:47:31,583 - httpcore.http11 - DEBUG - send_request_body.complete
+2026-01-16 10:47:31,583 - httpcore.http11 - DEBUG - receive_response_headers.started request=<Request [b'POST']>
+2026-01-16 10:47:31,638 - httpcore.http11 - DEBUG - receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Fri, 16 Jan 2026 02:47:31 GMT'), (b'Content-Type', b'application/json'), (b'Transfer-Encoding', b'chunked'), (b'Connection', b'keep-alive'), (b'Set-Cookie', b'HWWAFSESTIME=1768531648766; path=/'), (b'Set-Cookie', b'HWWAFSESID=2242da91da92283ed7; path=/'), (b'vary', b'origin, access-control-request-method, access-control-request-headers'), (b'access-control-allow-credentials', b'true'), (b'x-ds-trace-id', b'2becf7b561ce027cc206fd4634a6a90e'), (b'Strict-Transport-Security', b'max-age=31536000; includeSubDomains; preload'), (b'X-Content-Type-Options', b'nosniff'), (b'Server', b'CW'), (b'Content-Encoding', b'gzip')])
+2026-01-16 10:47:31,639 - httpx - INFO - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+2026-01-16 10:47:31,639 - httpcore.http11 - DEBUG - receive_response_body.started request=<Request [b'POST']>
+2026-01-16 10:47:31,688 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): telemetry.crewai.com:4319
+2026-01-16 10:47:32,250 - urllib3.connectionpool - DEBUG - https://telemetry.crewai.com:4319 "POST /v1/traces HTTP/1.1" 200 2
+2026-01-16 10:47:35,186 - httpcore.http11 - DEBUG - receive_response_body.complete
+2026-01-16 10:47:35,187 - httpcore.http11 - DEBUG - response_closed.started
+2026-01-16 10:47:35,187 - httpcore.http11 - DEBUG - response_closed.complete
+2026-01-16 10:47:35,187 - openai._base_client - DEBUG - HTTP Response: POST https://api.deepseek.com/chat/completions "200 OK" Headers([('date', 'Fri, 16 Jan 2026 02:47:31 GMT'), ('content-type', 'application/json'), ('transfer-encoding', 'chunked'), ('connection', 'keep-alive'), ('set-cookie', 'HWWAFSESTIME=1768531648766; path=/'), ('set-cookie', 'HWWAFSESID=2242da91da92283ed7; path=/'), ('vary', 'origin, access-control-request-method, access-control-request-headers'), ('access-control-allow-credentials', 'true'), ('x-ds-trace-id', '2becf7b561ce027cc206fd4634a6a90e'), ('strict-transport-security', 'max-age=31536000; includeSubDomains; preload'), ('x-content-type-options', 'nosniff'), ('server', 'CW'), ('content-encoding', 'gzip')])
+2026-01-16 10:47:35,187 - openai._base_client - DEBUG - request_id: None
+2026-01-16 10:47:35,207 - openai._base_client - DEBUG - Request options: {'method': 'post', 'url': '/chat/completions', 'files': None, 'idempotency_key': 'stainless-python-retry-84b9aec3-9391-4ce8-842f-4a9a9880844b', 'json_data': {'messages': [{'role': 'system', 'content': 'You are 产业链库存研究员. 你是一位专业的库存分析师，擅长从社会库存、工厂库存、\n    期货仓单等多个维度分析库存状况。你能准确判断库存拐点，\n    评估库存压力，为投资决策提供重要参考。\n    \n    现在你可以直接调用iFinD的权威库存数据进行分析。\n    \nYour personal goal is: 分析指定商品的库存结构和动态变化，评估库存对价格的影响\nYou ONLY have access to the following tools, and should NEVER make up tools that are not listed here:\n\nTool Name: 获取EDB数据用于库存分析\nTool Arguments: {\'start_date\': {\'description\': None, \'type\': \'str\'}, \'end_date\': {\'description\': None, \'type\': \'str\'}}\nTool Description: 获取库存分析所需的数据\n\nIMPORTANT: Use the following format in your response:\n\n```\nThought: you should always think about what to do\nAction: the action to take, only one name of [获取EDB数据用于库存分析], just the name, exactly as it\'s written.\nAction Input: the input to the action, just a simple JSON object, enclosed in curly braces, using " to wrap keys and values.\nObservation: the result of the action\n```\n\nOnce all necessary information is gathered, return the following format:\n\n```\nThought: I now know the final answer\nFinal Answer: the final answer to the original input question\n```'}, {'role': 'user', 'content': "\nCurrent Task: \n你是一位专业的库存分析师，专注于【沥青】。\n请对沥青进行库存分析。\n\n请严格按照以下步骤执行：\n1. **获取库存数据**：使用 '获取EDB数据用于库存分析' 工具获取 沥青 从 2025-07-20 到 2026-01-16 的库存相关数据。\n   - start_date: 2025-07-20\n   - end_date: 2026-01-16\n\n2. **执行分析**：基于获取到的数据，分析厂家库存、社会库存、期货仓单等维度。\n\n3. **撰写报告**：将分析结果整理成专业的库存分析报告。\n\n\nThis is the expected criteria for your final answer: \n# 沥青 库存分析报告\n\n## 分析时间\n2026-01-16 10:47:30\n\n## 一、核心观点\n[在此处填写你的核心判断，1-2句话]\n\n## 二、库存总览\n- **总量与变化**: [社会库存总量及周度/月度变化]\n- **主要集散地**: [列出库存量排名靠前的仓库或港口]\n\n## 三、产业链库存动态\n- **上游情况**: [原料库存状态]\n- **中游情况**: [贸易商库存及心态]\n- **下游情况**: [加工企业原料库存水平]\n\n## 四、市场展望与策略\n- **库存趋势预判**: [对未来库存变化的判断]\n- **价格影响评估**: [库存变化对价格的影响]\n- **投资机会提示**: [基于分析发现的潜在机会]\n- **风险提示**: [需要关注的风险因素]\n\nyou MUST return the actual complete content as the final answer, not a summary.\n\nBegin! This is VERY important to you, use the tools available and give your best Final Answer, your job depends on it!\n\nThought:"}, {'role': 'assistant', 'content': 'Thought: 我需要先获取沥青从2025-07-20到2026-01-16的库存相关数据，然后基于这些数据进行分析并撰写报告。\nAction: 获取EDB数据用于库存分析\nAction Input: {"start_date": "2025-07-20", "end_date": "2026-01-16"}\nObservation: \nI encountered an error while trying to use the tool. This was the error: EnhancedEDBDataTool.get_inventory_analysis_data() missing 1 required positional argument: \'self\'.\n Tool 获取EDB数据用于库存分析 accepts these inputs: Tool Name: 获取EDB数据用于库存分析\nTool Arguments: {\'start_date\': {\'description\': None, \'type\': \'str\'}, \'end_date\': {\'description\': None, \'type\': \'str\'}}\nTool Description: 获取库存分析所需的数据.\nMoving on then. I MUST either use a tool (use one at time) OR give my best final answer not both at the same time. When responding, I must use the following format:\n\n```\nThought: you should always think about what to do\nAction: the action to take, should be one of [获取EDB数据用于库存分析]\nAction Input: the input to the action, dictionary enclosed in curly braces\nObservation: the result of the action\n```\nThis Thought/Action/Action Input/Result can repeat N times. Once I know the final answer, I must return the following format:\n\n```\nThought: I now can give a great answer\nFinal Answer: Your final answer must be the great and the most complete as possible, it must be outcome described\n\n```'}], 'model': 'deepseek-chat', 'temperature': 0.7}}
+2026-01-16 10:47:35,210 - openai._base_client - DEBUG - Sending HTTP Request: POST https://api.deepseek.com/chat/completions
+2026-01-16 10:47:35,211 - httpcore.http11 - DEBUG - send_request_headers.started request=<Request [b'POST']>
+2026-01-16 10:47:35,211 - httpcore.http11 - DEBUG - send_request_headers.complete
+2026-01-16 10:47:35,211 - httpcore.http11 - DEBUG - send_request_body.started request=<Request [b'POST']>
+2026-01-16 10:47:35,212 - httpcore.http11 - DEBUG - send_request_body.complete
+2026-01-16 10:47:35,213 - httpcore.http11 - DEBUG - receive_response_headers.started request=<Request [b'POST']>
+2026-01-16 10:47:35,284 - httpcore.http11 - DEBUG - receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Fri, 16 Jan 2026 02:47:35 GMT'), (b'Content-Type', b'application/json'), (b'Transfer-Encoding', b'chunked'), (b'Connection', b'keep-alive'), (b'vary', b'origin, access-control-request-method, access-control-request-headers'), (b'access-control-allow-credentials', b'true'), (b'x-ds-trace-id', b'461e3605fb98404e09eb3db2beebfec6'), (b'Strict-Transport-Security', b'max-age=31536000; includeSubDomains; preload'), (b'X-Content-Type-Options', b'nosniff'), (b'Server', b'CW'), (b'Content-Encoding', b'gzip')])
+2026-01-16 10:47:35,285 - httpx - INFO - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+2026-01-16 10:47:35,285 - httpcore.http11 - DEBUG - receive_response_body.started request=<Request [b'POST']>
+2026-01-16 10:47:37,437 - urllib3.connectionpool - DEBUG - https://telemetry.crewai.com:4319 "POST /v1/traces HTTP/1.1" 200 2
+2026-01-16 10:48:19,629 - httpcore.http11 - DEBUG - receive_response_body.complete
+2026-01-16 10:48:19,630 - httpcore.http11 - DEBUG - response_closed.started
+2026-01-16 10:48:19,630 - httpcore.http11 - DEBUG - response_closed.complete
+2026-01-16 10:48:19,630 - openai._base_client - DEBUG - HTTP Response: POST https://api.deepseek.com/chat/completions "200 OK" Headers({'date': 'Fri, 16 Jan 2026 02:47:35 GMT', 'content-type': 'application/json', 'transfer-encoding': 'chunked', 'connection': 'keep-alive', 'vary': 'origin, access-control-request-method, access-control-request-headers', 'access-control-allow-credentials': 'true', 'x-ds-trace-id': '461e3605fb98404e09eb3db2beebfec6', 'strict-transport-security': 'max-age=31536000; includeSubDomains; preload', 'x-content-type-options': 'nosniff', 'server': 'CW', 'content-encoding': 'gzip'})
+2026-01-16 10:48:19,630 - openai._base_client - DEBUG - request_id: None
+2026-01-16 10:48:19,640 - config.logging_config - INFO - 分析流程完成
+2026-01-16 10:48:19,647 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): app.crewai.com:443
+2026-01-16 10:48:22,660 - urllib3.connectionpool - DEBUG - https://telemetry.crewai.com:4319 "POST /v1/traces HTTP/1.1" 200 2
+2026-01-16 10:48:23,076 - urllib3.connectionpool - DEBUG - https://app.crewai.com:443 "POST /crewai_plus/api/v1/tracing/ephemeral/batches/4ed33494-086b-4326-b3e8-68f866d443b1/events HTTP/1.1" 200 87
+2026-01-16 10:48:23,079 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): app.crewai.com:443
+2026-01-16 10:48:23,927 - urllib3.connectionpool - DEBUG - https://app.crewai.com:443 "PATCH /crewai_plus/api/v1/tracing/ephemeral/batches/4ed33494-086b-4326-b3e8-68f866d443b1/finalize HTTP/1.1" 200 519
+2026-01-16 11:16:46,138 - config.logging_config - INFO - 调试版分析工作流初始化完成
+2026-01-16 11:16:53,076 - config.logging_config - INFO - 收到用户请求: 沥青 半年库存分析
+2026-01-16 11:16:53,078 - config.logging_config - INFO - 意图解析完成: {'commodity': '沥青', 'time_range': {'start_date': '2025-07-20', 'end_date': '2026-01-16'}, 'keywords': ['inventory'], 'task_configs': [{'type': 'inventory'}], 'original_input': '沥青 半年库存分析'}
+2026-01-16 11:16:53,078 - config.logging_config - INFO - 创建了 1 个分析任务
+2026-01-16 11:16:53,082 - config.logging_config - INFO - 开始执行分析流程
+2026-01-16 11:16:53,087 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): app.crewai.com:443
+2026-01-16 11:16:55,054 - urllib3.connectionpool - DEBUG - https://app.crewai.com:443 "POST /crewai_plus/api/v1/tracing/ephemeral/batches HTTP/1.1" 201 515
+2026-01-16 11:16:55,232 - openai._base_client - DEBUG - Request options: {'method': 'post', 'url': '/chat/completions', 'files': None, 'idempotency_key': 'stainless-python-retry-c9233709-179f-462d-a93f-aff71a13bd26', 'json_data': {'messages': [{'role': 'system', 'content': 'You are 产业链库存研究员. 你是一位专业的库存分析师，擅长从社会库存、工厂库存、\n    期货仓单等多个维度分析库存状况。你能准确判断库存拐点，\n    评估库存压力，为投资决策提供重要参考。\n    \n    现在你可以直接调用iFinD的权威库存数据进行分析。\n    \nYour personal goal is: 分析指定商品的库存结构和动态变化，评估库存对价格的影响\nYou ONLY have access to the following tools, and should NEVER make up tools that are not listed here:\n\nTool Name: 获取EDB数据用于库存分析\nTool Arguments: {\'start_date\': {\'description\': None, \'type\': \'str\'}, \'end_date\': {\'description\': None, \'type\': \'str\'}}\nTool Description: 获取库存分析所需的数据\n\nIMPORTANT: Use the following format in your response:\n\n```\nThought: you should always think about what to do\nAction: the action to take, only one name of [获取EDB数据用于库存分析], just the name, exactly as it\'s written.\nAction Input: the input to the action, just a simple JSON object, enclosed in curly braces, using " to wrap keys and values.\nObservation: the result of the action\n```\n\nOnce all necessary information is gathered, return the following format:\n\n```\nThought: I now know the final answer\nFinal Answer: the final answer to the original input question\n```'}, {'role': 'user', 'content': "\nCurrent Task: \n你是一位专业的库存分析师，专注于【沥青】。\n请对沥青进行库存分析。\n\n请严格按照以下步骤执行：\n1. **获取库存数据**：使用 '获取EDB数据用于库存分析' 工具获取 沥青 从 2025-07-20 到 2026-01-16 的库存相关数据。\n   - start_date: 2025-07-20\n   - end_date: 2026-01-16\n\n2. **执行分析**：基于获取到的数据，分析厂家库存、社会库存、期货仓单等维度。\n\n3. **撰写报告**：将分析结果整理成专业的库存分析报告。\n\n\nThis is the expected criteria for your final answer: \n# 沥青 库存分析报告\n\n## 分析时间\n2026-01-16 11:16:53\n\n## 一、核心观点\n[在此处填写你的核心判断，1-2句话]\n\n## 二、库存总览\n- **总量与变化**: [社会库存总量及周度/月度变化]\n- **主要集散地**: [列出库存量排名靠前的仓库或港口]\n\n## 三、产业链库存动态\n- **上游情况**: [原料库存状态]\n- **中游情况**: [贸易商库存及心态]\n- **下游情况**: [加工企业原料库存水平]\n\n## 四、市场展望与策略\n- **库存趋势预判**: [对未来库存变化的判断]\n- **价格影响评估**: [库存变化对价格的影响]\n- **投资机会提示**: [基于分析发现的潜在机会]\n- **风险提示**: [需要关注的风险因素]\n\nyou MUST return the actual complete content as the final answer, not a summary.\n\nBegin! This is VERY important to you, use the tools available and give your best Final Answer, your job depends on it!\n\nThought:"}], 'model': 'deepseek-chat', 'temperature': 0.7}}
+2026-01-16 11:16:55,258 - openai._base_client - DEBUG - Sending HTTP Request: POST https://api.deepseek.com/chat/completions
+2026-01-16 11:16:55,258 - httpcore.connection - DEBUG - connect_tcp.started host='api.deepseek.com' port=443 local_address=None timeout=5.0 socket_options=None
+2026-01-16 11:16:55,302 - httpcore.connection - DEBUG - connect_tcp.complete return_value=<httpcore._backends.sync.SyncStream object at 0x11e9205f0>
+2026-01-16 11:16:55,302 - httpcore.connection - DEBUG - start_tls.started ssl_context=<ssl.SSLContext object at 0x11e3029d0> server_hostname='api.deepseek.com' timeout=5.0
+2026-01-16 11:16:55,343 - httpcore.connection - DEBUG - start_tls.complete return_value=<httpcore._backends.sync.SyncStream object at 0x11e9209b0>
+2026-01-16 11:16:55,343 - httpcore.http11 - DEBUG - send_request_headers.started request=<Request [b'POST']>
+2026-01-16 11:16:55,344 - httpcore.http11 - DEBUG - send_request_headers.complete
+2026-01-16 11:16:55,344 - httpcore.http11 - DEBUG - send_request_body.started request=<Request [b'POST']>
+2026-01-16 11:16:55,344 - httpcore.http11 - DEBUG - send_request_body.complete
+2026-01-16 11:16:55,344 - httpcore.http11 - DEBUG - receive_response_headers.started request=<Request [b'POST']>
+2026-01-16 11:16:55,406 - httpcore.http11 - DEBUG - receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Fri, 16 Jan 2026 03:16:55 GMT'), (b'Content-Type', b'application/json'), (b'Transfer-Encoding', b'chunked'), (b'Connection', b'keep-alive'), (b'Set-Cookie', b'HWWAFSESTIME=1768533411339; path=/'), (b'Set-Cookie', b'HWWAFSESID=8f1a11126d3c7902763; path=/'), (b'vary', b'origin, access-control-request-method, access-control-request-headers'), (b'access-control-allow-credentials', b'true'), (b'x-ds-trace-id', b'49b9c95cdb71b3aa9a851b81b2279059'), (b'Strict-Transport-Security', b'max-age=31536000; includeSubDomains; preload'), (b'X-Content-Type-Options', b'nosniff'), (b'Server', b'CW'), (b'Content-Encoding', b'gzip')])
+2026-01-16 11:16:55,406 - httpx - INFO - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+2026-01-16 11:16:55,406 - httpcore.http11 - DEBUG - receive_response_body.started request=<Request [b'POST']>
+2026-01-16 11:16:58,805 - httpcore.http11 - DEBUG - receive_response_body.complete
+2026-01-16 11:16:58,805 - httpcore.http11 - DEBUG - response_closed.started
+2026-01-16 11:16:58,805 - httpcore.http11 - DEBUG - response_closed.complete
+2026-01-16 11:16:58,805 - openai._base_client - DEBUG - HTTP Response: POST https://api.deepseek.com/chat/completions "200 OK" Headers([('date', 'Fri, 16 Jan 2026 03:16:55 GMT'), ('content-type', 'application/json'), ('transfer-encoding', 'chunked'), ('connection', 'keep-alive'), ('set-cookie', 'HWWAFSESTIME=1768533411339; path=/'), ('set-cookie', 'HWWAFSESID=8f1a11126d3c7902763; path=/'), ('vary', 'origin, access-control-request-method, access-control-request-headers'), ('access-control-allow-credentials', 'true'), ('x-ds-trace-id', '49b9c95cdb71b3aa9a851b81b2279059'), ('strict-transport-security', 'max-age=31536000; includeSubDomains; preload'), ('x-content-type-options', 'nosniff'), ('server', 'CW'), ('content-encoding', 'gzip')])
+2026-01-16 11:16:58,805 - openai._base_client - DEBUG - request_id: None
+2026-01-16 11:16:58,822 - openai._base_client - DEBUG - Request options: {'method': 'post', 'url': '/chat/completions', 'files': None, 'idempotency_key': 'stainless-python-retry-c162af5a-a7d1-4f57-95fe-b5ac09ce0aa7', 'json_data': {'messages': [{'role': 'system', 'content': 'You are 产业链库存研究员. 你是一位专业的库存分析师，擅长从社会库存、工厂库存、\n    期货仓单等多个维度分析库存状况。你能准确判断库存拐点，\n    评估库存压力，为投资决策提供重要参考。\n    \n    现在你可以直接调用iFinD的权威库存数据进行分析。\n    \nYour personal goal is: 分析指定商品的库存结构和动态变化，评估库存对价格的影响\nYou ONLY have access to the following tools, and should NEVER make up tools that are not listed here:\n\nTool Name: 获取EDB数据用于库存分析\nTool Arguments: {\'start_date\': {\'description\': None, \'type\': \'str\'}, \'end_date\': {\'description\': None, \'type\': \'str\'}}\nTool Description: 获取库存分析所需的数据\n\nIMPORTANT: Use the following format in your response:\n\n```\nThought: you should always think about what to do\nAction: the action to take, only one name of [获取EDB数据用于库存分析], just the name, exactly as it\'s written.\nAction Input: the input to the action, just a simple JSON object, enclosed in curly braces, using " to wrap keys and values.\nObservation: the result of the action\n```\n\nOnce all necessary information is gathered, return the following format:\n\n```\nThought: I now know the final answer\nFinal Answer: the final answer to the original input question\n```'}, {'role': 'user', 'content': "\nCurrent Task: \n你是一位专业的库存分析师，专注于【沥青】。\n请对沥青进行库存分析。\n\n请严格按照以下步骤执行：\n1. **获取库存数据**：使用 '获取EDB数据用于库存分析' 工具获取 沥青 从 2025-07-20 到 2026-01-16 的库存相关数据。\n   - start_date: 2025-07-20\n   - end_date: 2026-01-16\n\n2. **执行分析**：基于获取到的数据，分析厂家库存、社会库存、期货仓单等维度。\n\n3. **撰写报告**：将分析结果整理成专业的库存分析报告。\n\n\nThis is the expected criteria for your final answer: \n# 沥青 库存分析报告\n\n## 分析时间\n2026-01-16 11:16:53\n\n## 一、核心观点\n[在此处填写你的核心判断，1-2句话]\n\n## 二、库存总览\n- **总量与变化**: [社会库存总量及周度/月度变化]\n- **主要集散地**: [列出库存量排名靠前的仓库或港口]\n\n## 三、产业链库存动态\n- **上游情况**: [原料库存状态]\n- **中游情况**: [贸易商库存及心态]\n- **下游情况**: [加工企业原料库存水平]\n\n## 四、市场展望与策略\n- **库存趋势预判**: [对未来库存变化的判断]\n- **价格影响评估**: [库存变化对价格的影响]\n- **投资机会提示**: [基于分析发现的潜在机会]\n- **风险提示**: [需要关注的风险因素]\n\nyou MUST return the actual complete content as the final answer, not a summary.\n\nBegin! This is VERY important to you, use the tools available and give your best Final Answer, your job depends on it!\n\nThought:"}, {'role': 'assistant', 'content': 'Thought: 我需要先获取沥青从2025-07-20到2026-01-16的库存相关数据，然后基于这些数据进行分析并撰写报告。\n\nAction: 获取EDB数据用于库存分析\nAction Input: {"start_date": "2025-07-20", "end_date": "2026-01-16"}\nObservation: \nI encountered an error while trying to use the tool. This was the error: EnhancedEDBDataTool.get_inventory_analysis_data() missing 1 required positional argument: \'self\'.\n Tool 获取EDB数据用于库存分析 accepts these inputs: Tool Name: 获取EDB数据用于库存分析\nTool Arguments: {\'start_date\': {\'description\': None, \'type\': \'str\'}, \'end_date\': {\'description\': None, \'type\': \'str\'}}\nTool Description: 获取库存分析所需的数据.\nMoving on then. I MUST either use a tool (use one at time) OR give my best final answer not both at the same time. When responding, I must use the following format:\n\n```\nThought: you should always think about what to do\nAction: the action to take, should be one of [获取EDB数据用于库存分析]\nAction Input: the input to the action, dictionary enclosed in curly braces\nObservation: the result of the action\n```\nThis Thought/Action/Action Input/Result can repeat N times. Once I know the final answer, I must return the following format:\n\n```\nThought: I now can give a great answer\nFinal Answer: Your final answer must be the great and the most complete as possible, it must be outcome described\n\n```'}], 'model': 'deepseek-chat', 'temperature': 0.7}}
+2026-01-16 11:16:58,825 - openai._base_client - DEBUG - Sending HTTP Request: POST https://api.deepseek.com/chat/completions
+2026-01-16 11:16:58,828 - httpcore.http11 - DEBUG - send_request_headers.started request=<Request [b'POST']>
+2026-01-16 11:16:58,833 - httpcore.http11 - DEBUG - send_request_headers.complete
+2026-01-16 11:16:58,835 - httpcore.http11 - DEBUG - send_request_body.started request=<Request [b'POST']>
+2026-01-16 11:16:58,836 - httpcore.http11 - DEBUG - send_request_body.complete
+2026-01-16 11:16:58,836 - httpcore.http11 - DEBUG - receive_response_headers.started request=<Request [b'POST']>
+2026-01-16 11:16:58,896 - httpcore.http11 - DEBUG - receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Fri, 16 Jan 2026 03:16:58 GMT'), (b'Content-Type', b'application/json'), (b'Transfer-Encoding', b'chunked'), (b'Connection', b'keep-alive'), (b'vary', b'origin, access-control-request-method, access-control-request-headers'), (b'access-control-allow-credentials', b'true'), (b'x-ds-trace-id', b'9790a903fdc81aac0b9d0942640b3ee0'), (b'Strict-Transport-Security', b'max-age=31536000; includeSubDomains; preload'), (b'X-Content-Type-Options', b'nosniff'), (b'Server', b'CW'), (b'Content-Encoding', b'gzip')])
+2026-01-16 11:16:58,896 - httpx - INFO - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+2026-01-16 11:16:58,897 - httpcore.http11 - DEBUG - receive_response_body.started request=<Request [b'POST']>
+2026-01-16 11:16:59,867 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): telemetry.crewai.com:4319
+2026-01-16 11:17:00,460 - urllib3.connectionpool - DEBUG - https://telemetry.crewai.com:4319 "POST /v1/traces HTTP/1.1" 200 2
+2026-01-16 11:17:33,519 - httpcore.http11 - DEBUG - receive_response_body.complete
+2026-01-16 11:17:33,519 - httpcore.http11 - DEBUG - response_closed.started
+2026-01-16 11:17:33,519 - httpcore.http11 - DEBUG - response_closed.complete
+2026-01-16 11:17:33,519 - openai._base_client - DEBUG - HTTP Response: POST https://api.deepseek.com/chat/completions "200 OK" Headers({'date': 'Fri, 16 Jan 2026 03:16:58 GMT', 'content-type': 'application/json', 'transfer-encoding': 'chunked', 'connection': 'keep-alive', 'vary': 'origin, access-control-request-method, access-control-request-headers', 'access-control-allow-credentials': 'true', 'x-ds-trace-id': '9790a903fdc81aac0b9d0942640b3ee0', 'strict-transport-security': 'max-age=31536000; includeSubDomains; preload', 'x-content-type-options': 'nosniff', 'server': 'CW', 'content-encoding': 'gzip'})
+2026-01-16 11:17:33,519 - openai._base_client - DEBUG - request_id: None
+2026-01-16 11:17:33,529 - config.logging_config - INFO - 分析流程完成
+2026-01-16 11:17:33,536 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): app.crewai.com:443
+2026-01-16 11:17:34,989 - urllib3.connectionpool - DEBUG - https://app.crewai.com:443 "POST /crewai_plus/api/v1/tracing/ephemeral/batches/85e546d4-b315-4f2a-ae6a-54efdaa083c2/events HTTP/1.1" 200 87
+2026-01-16 11:17:34,992 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): app.crewai.com:443
+2026-01-16 11:17:35,748 - urllib3.connectionpool - DEBUG - https://app.crewai.com:443 "PATCH /crewai_plus/api/v1/tracing/ephemeral/batches/85e546d4-b315-4f2a-ae6a-54efdaa083c2/finalize HTTP/1.1" 200 519
+2026-01-16 11:17:57,002 - urllib3.connectionpool - DEBUG - https://telemetry.crewai.com:4319 "POST /v1/traces HTTP/1.1" 200 2
+2026-01-16 11:33:03,653 - config.logging_config - INFO - 分析工作流初始化完成
+2026-01-16 11:33:03,653 - config.logging_config - INFO - 收到用户请求: 沥青 半年库存分析
+2026-01-16 11:33:03,654 - config.logging_config - INFO - 意图解析完成: {'commodity': '沥青', 'time_range': {'start_date': '2025-07-20', 'end_date': '2026-01-16'}, 'keywords': ['inventory'], 'task_configs': [{'type': 'inventory'}], 'original_input': '沥青 半年库存分析'}
+2026-01-16 11:33:03,654 - config.logging_config - INFO - 创建了 1 个分析任务
+2026-01-16 11:33:03,658 - config.logging_config - INFO - 开始执行分析流程
+2026-01-16 11:33:03,666 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): app.crewai.com:443
+2026-01-16 11:33:04,634 - urllib3.connectionpool - DEBUG - https://app.crewai.com:443 "POST /crewai_plus/api/v1/tracing/ephemeral/batches HTTP/1.1" 201 515
+2026-01-16 11:33:04,808 - openai._base_client - DEBUG - Request options: {'method': 'post', 'url': '/chat/completions', 'files': None, 'idempotency_key': 'stainless-python-retry-82fa6780-4de0-4eca-8a26-1e102d3d7d06', 'json_data': {'messages': [{'role': 'system', 'content': 'You are 产业链库存研究员. 你是一位专业的库存分析师，擅长从社会库存、工厂库存、\n    期货仓单等多个维度分析库存状况。你能准确判断库存拐点，\n    评估库存压力，为投资决策提供重要参考。\n    \n    现在你可以直接调用iFinD的权威库存数据进行分析。\n    \nYour personal goal is: 分析指定商品的库存结构和动态变化，评估库存对价格的影响\nYou ONLY have access to the following tools, and should NEVER make up tools that are not listed here:\n\nTool Name: 获取EDB数据用于库存分析\nTool Arguments: {\'start_date\': {\'description\': None, \'type\': \'str\'}, \'end_date\': {\'description\': None, \'type\': \'str\'}}\nTool Description: 获取库存分析所需的数据\n\nIMPORTANT: Use the following format in your response:\n\n```\nThought: you should always think about what to do\nAction: the action to take, only one name of [获取EDB数据用于库存分析], just the name, exactly as it\'s written.\nAction Input: the input to the action, just a simple JSON object, enclosed in curly braces, using " to wrap keys and values.\nObservation: the result of the action\n```\n\nOnce all necessary information is gathered, return the following format:\n\n```\nThought: I now know the final answer\nFinal Answer: the final answer to the original input question\n```'}, {'role': 'user', 'content': "\nCurrent Task: \n你是一位专业的库存分析师，专注于【沥青】。\n请对沥青进行库存分析。\n\n请严格按照以下步骤执行：\n1. **获取库存数据**：使用 '获取EDB数据用于库存分析' 工具获取 沥青 从 2025-07-20 到 2026-01-16 的库存相关数据。\n   - start_date: 2025-07-20\n   - end_date: 2026-01-16\n\n2. **执行分析**：基于获取到的数据，分析厂家库存、社会库存、期货仓单等维度。\n\n3. **撰写报告**：将分析结果整理成专业的库存分析报告。\n\n\nThis is the expected criteria for your final answer: \n# 沥青 库存分析报告\n\n## 分析时间\n2026-01-16 11:33:03\n\n## 一、核心观点\n[在此处填写你的核心判断，1-2句话]\n\n## 二、库存总览\n- **总量与变化**: [社会库存总量及周度/月度变化]\n- **主要集散地**: [列出库存量排名靠前的仓库或港口]\n\n## 三、产业链库存动态\n- **上游情况**: [原料库存状态]\n- **中游情况**: [贸易商库存及心态]\n- **下游情况**: [加工企业原料库存水平]\n\n## 四、市场展望与策略\n- **库存趋势预判**: [对未来库存变化的判断]\n- **价格影响评估**: [库存变化对价格的影响]\n- **投资机会提示**: [基于分析发现的潜在机会]\n- **风险提示**: [需要关注的风险因素]\n\nyou MUST return the actual complete content as the final answer, not a summary.\n\nBegin! This is VERY important to you, use the tools available and give your best Final Answer, your job depends on it!\n\nThought:"}], 'model': 'deepseek-chat', 'temperature': 0.7}}
+2026-01-16 11:33:04,835 - openai._base_client - DEBUG - Sending HTTP Request: POST https://api.deepseek.com/chat/completions
+2026-01-16 11:33:04,836 - httpcore.connection - DEBUG - connect_tcp.started host='api.deepseek.com' port=443 local_address=None timeout=5.0 socket_options=None
+2026-01-16 11:33:04,881 - httpcore.connection - DEBUG - connect_tcp.complete return_value=<httpcore._backends.sync.SyncStream object at 0x117885fd0>
+2026-01-16 11:33:04,882 - httpcore.connection - DEBUG - start_tls.started ssl_context=<ssl.SSLContext object at 0x1173a1250> server_hostname='api.deepseek.com' timeout=5.0
+2026-01-16 11:33:04,923 - httpcore.connection - DEBUG - start_tls.complete return_value=<httpcore._backends.sync.SyncStream object at 0x1177d83e0>
+2026-01-16 11:33:04,923 - httpcore.http11 - DEBUG - send_request_headers.started request=<Request [b'POST']>
+2026-01-16 11:33:04,924 - httpcore.http11 - DEBUG - send_request_headers.complete
+2026-01-16 11:33:04,924 - httpcore.http11 - DEBUG - send_request_body.started request=<Request [b'POST']>
+2026-01-16 11:33:04,924 - httpcore.http11 - DEBUG - send_request_body.complete
+2026-01-16 11:33:04,924 - httpcore.http11 - DEBUG - receive_response_headers.started request=<Request [b'POST']>
+2026-01-16 11:33:04,980 - httpcore.http11 - DEBUG - receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Fri, 16 Jan 2026 03:33:05 GMT'), (b'Content-Type', b'application/json'), (b'Transfer-Encoding', b'chunked'), (b'Connection', b'keep-alive'), (b'Set-Cookie', b'HWWAFSESTIME=1768534383661; path=/'), (b'Set-Cookie', b'HWWAFSESID=196e194f6c4834b675; path=/'), (b'vary', b'origin, access-control-request-method, access-control-request-headers'), (b'access-control-allow-credentials', b'true'), (b'x-ds-trace-id', b'13ccaffaa73bacbad2b2fb35acbd3ed6'), (b'Strict-Transport-Security', b'max-age=31536000; includeSubDomains; preload'), (b'X-Content-Type-Options', b'nosniff'), (b'Server', b'CW'), (b'Content-Encoding', b'gzip')])
+2026-01-16 11:33:04,981 - httpx - INFO - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+2026-01-16 11:33:04,981 - httpcore.http11 - DEBUG - receive_response_body.started request=<Request [b'POST']>
+2026-01-16 11:33:07,420 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): telemetry.crewai.com:4319
+2026-01-16 11:33:07,995 - urllib3.connectionpool - DEBUG - https://telemetry.crewai.com:4319 "POST /v1/traces HTTP/1.1" 200 2
+2026-01-16 11:33:36,723 - httpcore.http11 - DEBUG - receive_response_body.complete
+2026-01-16 11:33:36,723 - httpcore.http11 - DEBUG - response_closed.started
+2026-01-16 11:33:36,723 - httpcore.http11 - DEBUG - response_closed.complete
+2026-01-16 11:33:36,724 - openai._base_client - DEBUG - HTTP Response: POST https://api.deepseek.com/chat/completions "200 OK" Headers([('date', 'Fri, 16 Jan 2026 03:33:05 GMT'), ('content-type', 'application/json'), ('transfer-encoding', 'chunked'), ('connection', 'keep-alive'), ('set-cookie', 'HWWAFSESTIME=1768534383661; path=/'), ('set-cookie', 'HWWAFSESID=196e194f6c4834b675; path=/'), ('vary', 'origin, access-control-request-method, access-control-request-headers'), ('access-control-allow-credentials', 'true'), ('x-ds-trace-id', '13ccaffaa73bacbad2b2fb35acbd3ed6'), ('strict-transport-security', 'max-age=31536000; includeSubDomains; preload'), ('x-content-type-options', 'nosniff'), ('server', 'CW'), ('content-encoding', 'gzip')])
+2026-01-16 11:33:36,724 - openai._base_client - DEBUG - request_id: None
+2026-01-16 11:33:36,736 - config.logging_config - INFO - 分析流程完成
+2026-01-16 11:33:36,738 - config.logging_config - INFO - 收到用户请求: 分析螺纹钢最近3个月的基差情况
+2026-01-16 11:33:36,738 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): app.crewai.com:443
+2026-01-16 11:33:36,738 - config.logging_config - INFO - 意图解析完成: {'commodity': '螺纹钢', 'time_range': {'start_date': '2025-10-18', 'end_date': '2026-01-16'}, 'keywords': ['basis'], 'task_configs': [{'type': 'basis'}], 'original_input': '分析螺纹钢最近3个月的基差情况'}
+2026-01-16 11:33:36,739 - config.logging_config - INFO - 创建了 1 个分析任务
+2026-01-16 11:33:36,743 - config.logging_config - INFO - 开始执行分析流程
+2026-01-16 11:33:36,776 - zhipuai.api_resource.chat.completions - DEBUG - temperature:0.7, top_p:NOT_GIVEN
+2026-01-16 11:33:36,777 - zhipuai.api_resource.chat.completions - DEBUG - temperature:0.7, top_p:NOT_GIVEN
+2026-01-16 11:33:36,781 - httpcore.connection - DEBUG - connect_tcp.started host='open.bigmodel.cn' port=443 local_address=None timeout=8.0 socket_options=None
+2026-01-16 11:33:36,826 - httpcore.connection - DEBUG - connect_tcp.complete return_value=<httpcore._backends.sync.SyncStream object at 0x11377f7d0>
+2026-01-16 11:33:36,826 - httpcore.connection - DEBUG - start_tls.started ssl_context=<ssl.SSLContext object at 0x1173a0dd0> server_hostname='open.bigmodel.cn' timeout=8.0
+2026-01-16 11:33:36,902 - httpcore.connection - DEBUG - start_tls.complete return_value=<httpcore._backends.sync.SyncStream object at 0x1173f0d70>
+2026-01-16 11:33:36,902 - httpcore.http11 - DEBUG - send_request_headers.started request=<Request [b'POST']>
+2026-01-16 11:33:36,903 - httpcore.http11 - DEBUG - send_request_headers.complete
+2026-01-16 11:33:36,903 - httpcore.http11 - DEBUG - send_request_body.started request=<Request [b'POST']>
+2026-01-16 11:33:36,903 - httpcore.http11 - DEBUG - send_request_body.complete
+2026-01-16 11:33:36,903 - httpcore.http11 - DEBUG - receive_response_headers.started request=<Request [b'POST']>
+2026-01-16 11:33:37,797 - urllib3.connectionpool - DEBUG - https://app.crewai.com:443 "POST /crewai_plus/api/v1/tracing/ephemeral/batches/7eb95be7-3dad-47eb-8a40-ab9853c9308f/events HTTP/1.1" 200 86
+2026-01-16 11:33:37,800 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): app.crewai.com:443
+2026-01-16 11:33:38,571 - urllib3.connectionpool - DEBUG - https://app.crewai.com:443 "PATCH /crewai_plus/api/v1/tracing/ephemeral/batches/7eb95be7-3dad-47eb-8a40-ab9853c9308f/finalize HTTP/1.1" 200 518
+2026-01-16 11:34:02,395 - urllib3.connectionpool - DEBUG - https://telemetry.crewai.com:4319 "POST /v1/traces HTTP/1.1" 200 2
+2026-01-16 11:35:09,819 - httpcore.http11 - DEBUG - receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Fri, 16 Jan 2026 03:35:09 GMT'), (b'Content-Type', b'application/json; charset=UTF-8'), (b'Transfer-Encoding', b'chunked'), (b'Connection', b'keep-alive'), (b'Set-Cookie', b'acw_tc=ac11000117685344170504585e125e8af1a2d595f2ff01c697ba7d5efff8d3;path=/;HttpOnly;Max-Age=1800'), (b'Vary', b'Accept-Encoding'), (b'Vary', b'Origin'), (b'Vary', b'Access-Control-Request-Method'), (b'Vary', b'Access-Control-Request-Headers'), (b'X-LOG-ID', b'20260116113337ace70a1034374cfd'), (b'Vary', b'Origin'), (b'Vary', b'Access-Control-Request-Method'), (b'Vary', b'Access-Control-Request-Headers'), (b'Strict-Transport-Security', b'max-age=31536000; includeSubDomains'), (b'Content-Encoding', b'gzip')])
+2026-01-16 11:35:09,820 - httpx - INFO - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+2026-01-16 11:35:09,820 - httpcore.http11 - DEBUG - receive_response_body.started request=<Request [b'POST']>
+2026-01-16 11:35:09,821 - httpcore.http11 - DEBUG - receive_response_body.complete
+2026-01-16 11:35:09,821 - httpcore.http11 - DEBUG - response_closed.started
+2026-01-16 11:35:09,821 - httpcore.http11 - DEBUG - response_closed.complete
+2026-01-16 11:35:09,821 - zhipuai.core._http_client - DEBUG - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "200 OK"
+2026-01-16 11:35:10,233 - zhipuai.api_resource.chat.completions - DEBUG - temperature:0.7, top_p:NOT_GIVEN
+2026-01-16 11:35:10,233 - zhipuai.api_resource.chat.completions - DEBUG - temperature:0.7, top_p:NOT_GIVEN
+2026-01-16 11:35:10,235 - httpcore.http11 - DEBUG - send_request_headers.started request=<Request [b'POST']>
+2026-01-16 11:35:10,236 - httpcore.http11 - DEBUG - send_request_headers.complete
+2026-01-16 11:35:10,237 - httpcore.http11 - DEBUG - send_request_body.started request=<Request [b'POST']>
+2026-01-16 11:35:10,308 - httpcore.http11 - DEBUG - send_request_body.complete
+2026-01-16 11:35:10,321 - httpcore.http11 - DEBUG - receive_response_headers.started request=<Request [b'POST']>
+2026-01-16 11:35:11,865 - httpcore.http11 - DEBUG - receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Fri, 16 Jan 2026 03:35:11 GMT'), (b'Content-Type', b'application/json; charset=UTF-8'), (b'Transfer-Encoding', b'chunked'), (b'Connection', b'keep-alive'), (b'Vary', b'Accept-Encoding'), (b'Vary', b'Origin'), (b'Vary', b'Access-Control-Request-Method'), (b'Vary', b'Access-Control-Request-Headers'), (b'X-LOG-ID', b'2026011611351055f5bcb063494504'), (b'Vary', b'Origin'), (b'Vary', b'Access-Control-Request-Method'), (b'Vary', b'Access-Control-Request-Headers'), (b'Strict-Transport-Security', b'max-age=31536000; includeSubDomains'), (b'Content-Encoding', b'gzip')])
+2026-01-16 11:35:11,865 - httpx - INFO - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+2026-01-16 11:35:11,865 - httpcore.http11 - DEBUG - receive_response_body.started request=<Request [b'POST']>
+2026-01-16 11:35:11,866 - httpcore.http11 - DEBUG - receive_response_body.complete
+2026-01-16 11:35:11,866 - httpcore.http11 - DEBUG - response_closed.started
+2026-01-16 11:35:11,866 - httpcore.http11 - DEBUG - response_closed.complete
+2026-01-16 11:35:11,866 - zhipuai.core._http_client - DEBUG - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "200 OK"
+2026-01-16 11:35:11,869 - tools.ifind_tool - INFO - === 开始获取基差数据 ===
+2026-01-16 11:35:11,869 - tools.ifind_tool - DEBUG - 请求参数:
+2026-01-16 11:35:11,869 - tools.ifind_tool - DEBUG -   指标数量: 209
+2026-01-16 11:35:11,869 - tools.ifind_tool - DEBUG -   指标列表: ['S004302825', 'S004302857', 'S006824536', 'S006824532', 'S004494136', 'S004302822', 'S002861327', 'S007247429', 'S004302805', 'S004302826', 'S004302850', 'S004302820', 'S006899687', 'S004156245', 'S006824524', 'S004494141', 'S004069732', 'S018556807', 'S004302829', 'S006824526', 'S004302863', 'S012195629', 'S006824505', 'S004302816', 'S004494143', 'S004162657', 'S019294526', 'S004302833', 'S004302803', 'S006824527', 'S006824528', 'S002861342', 'S006824509', 'S006824515', 'S003715031', 'S002861337', 'S004494131', 'S004302845', 'S004494133', 'S003715029', 'S006824497', 'S004302869', 'S004302855', 'S004494138', 'S006824487', 'S006853447', 'S006824496', 'S004494132', 'S019294528', 'S010863418', 'S012195606', 'S006824492', 'S004302819', 'S019294529', 'S004302798', 'S007247455', 'S004157068', 'S004069734', 'S006824529', 'S004302800', 'S004069735', 'S004069731', 'S004241720', 'S004302823', 'S004302827', 'S004302810', 'S006899684', 'S012195585', 'S004302809', 'S006824502', 'S004494137', 'S016696684', 'S006853442', 'S006824504', 'S006824503', 'S004302840', 'S004302799', 'S004302828', 'S010863412', 'S004302813', 'S016936189', 'S004302867', 'S010471397', 'S004302824', 'S006899685', 'S019294527', 'S006824535', 'S007247476', 'S004302856', 'S002861333', 'S006824537', 'S004302836', 'S006824499', 'S004302853', 'S002861322', 'S010863415', 'S006824508', 'S004241719', 'S004302858', 'S010863403', 'S012195705', 'S004494134', 'S006853446', 'S006824506', 'S016936188', 'S004162658', 'S004494144', 'S006824500', 'S004302811', 'S004302807', 'S004302802', 'S016696681', 'S010863424', 'S016696683', 'S006824491', 'S004302859', 'S004494139', 'S006899688', 'S007247459', 'S004302865', 'S006899683', 'S004241721', 'S004302854', 'S006853440', 'S004069733', 'S006853441', 'S012195681', 'S004156257', 'S004302801', 'S012195572', 'S004069736', 'S006853439', 'S004302841', 'S006824514', 'S006824489', 'S006824530', 'S004302849', 'S006824501', 'S004302795', 'S004494135', 'S010471394', 'S007247423', 'S004302808', 'S004302847', 'S006899682', 'S006824507', 'S004302835', 'S002861329', 'S010863427', 'S006853448', 'S004302846', 'S006824495', 'S004302821', 'S004302817', 'S003715030', 'S004494146', 'S004157065', 'S006824513', 'S010863421', 'S006824531', 'S007247253', 'S006899686', 'S004302839', 'S002861347', 'S004302852', 'S004494145', 'S006824510', 'S016696682', 'S004302797', 'S004494142', 'S012195630', 'S006824494', 'S002861334', 'S004302815', 'S012195660', 'S004302804', 'S004302793', 'S004302818', 'S006824522', 'S004157062', 'S006853438', 'S006824534', 'S012195704', 'S006853443', 'S006853445', 'S012195647', 'S006824498', 'S004302848', 'S004302843', 'S004302806', 'S004302870', 'S004302860', 'S006853444', 'S004302866', 'S002861338', 'S002861346', 'S006824525', 'S003715032', 'S006853437', 'S006824488', 'S004302837', 'S004302861', 'S004302851', 'S002861330', 'S006824493', 'S002861328', 'S010863409', 'S010863406', 'S004494140']
+2026-01-16 11:35:11,871 - tools.ifind_tool - DEBUG -   时间范围: 2025-10-18 至 2026-01-16
+2026-01-16 11:35:11,871 - data_providers.ifind_http_client - INFO - 发送请求到: https://quantapi.51ifind.com/api/v1/edb_service
+2026-01-16 11:35:11,871 - data_providers.ifind_http_client - INFO - 请求数据: {'indicators': 'S004302825,S004302857,S006824536,S006824532,S004494136,S004302822,S002861327,S007247429,S004302805,S004302826,S004302850,S004302820,S006899687,S004156245,S006824524,S004494141,S004069732,S018556807,S004302829,S006824526,S004302863,S012195629,S006824505,S004302816,S004494143,S004162657,S019294526,S004302833,S004302803,S006824527,S006824528,S002861342,S006824509,S006824515,S003715031,S002861337,S004494131,S004302845,S004494133,S003715029,S006824497,S004302869,S004302855,S004494138,S006824487,S006853447,S006824496,S004494132,S019294528,S010863418,S012195606,S006824492,S004302819,S019294529,S004302798,S007247455,S004157068,S004069734,S006824529,S004302800,S004069735,S004069731,S004241720,S004302823,S004302827,S004302810,S006899684,S012195585,S004302809,S006824502,S004494137,S016696684,S006853442,S006824504,S006824503,S004302840,S004302799,S004302828,S010863412,S004302813,S016936189,S004302867,S010471397,S004302824,S006899685,S019294527,S006824535,S007247476,S004302856,S002861333,S006824537,S004302836,S006824499,S004302853,S002861322,S010863415,S006824508,S004241719,S004302858,S010863403,S012195705,S004494134,S006853446,S006824506,S016936188,S004162658,S004494144,S006824500,S004302811,S004302807,S004302802,S016696681,S010863424,S016696683,S006824491,S004302859,S004494139,S006899688,S007247459,S004302865,S006899683,S004241721,S004302854,S006853440,S004069733,S006853441,S012195681,S004156257,S004302801,S012195572,S004069736,S006853439,S004302841,S006824514,S006824489,S006824530,S004302849,S006824501,S004302795,S004494135,S010471394,S007247423,S004302808,S004302847,S006899682,S006824507,S004302835,S002861329,S010863427,S006853448,S004302846,S006824495,S004302821,S004302817,S003715030,S004494146,S004157065,S006824513,S010863421,S006824531,S007247253,S006899686,S004302839,S002861347,S004302852,S004494145,S006824510,S016696682,S004302797,S004494142,S012195630,S006824494,S002861334,S004302815,S012195660,S004302804,S004302793,S004302818,S006824522,S004157062,S006853438,S006824534,S012195704,S006853443,S006853445,S012195647,S006824498,S004302848,S004302843,S004302806,S004302870,S004302860,S006853444,S004302866,S002861338,S002861346,S006824525,S003715032,S006853437,S006824488,S004302837,S004302861,S004302851,S002861330,S006824493,S002861328,S010863409,S010863406,S004494140', 'startdate': '20251018', 'enddate': '20260116'}
+2026-01-16 11:35:11,873 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): app.crewai.com:443
+2026-01-16 11:35:11,874 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): quantapi.51ifind.com:443
+2026-01-16 11:35:13,300 - urllib3.connectionpool - DEBUG - https://app.crewai.com:443 "POST /crewai_plus/api/v1/tracing/batches HTTP/1.1" 401 55
+2026-01-16 11:35:13,300 - crewai.events.listeners.tracing.trace_batch_manager - WARNING - Trace batch initialization returned status 401. Continuing without tracing.
+2026-01-16 11:35:13,392 - urllib3.connectionpool - DEBUG - https://quantapi.51ifind.com:443 "POST /api/v1/edb_service HTTP/1.1" 200 None
+2026-01-16 11:35:13,594 - data_providers.ifind_http_client - INFO - API响应错误码: 0
+2026-01-16 11:35:13,596 - tools.ifind_tool - INFO - API响应结构: ['errorcode', 'errmsg', 'tables', 'datatype', 'inputParams', 'perf', 'dataVol']
+2026-01-16 11:35:13,601 - tools.ifind_tool - DEBUG - 完整API响应: {"errorcode": 0, "errmsg": "success", "tables": [{"id": ["S004302825"], "time": ["2026-01-09", "2026-01-02", "2025-12-26", "2025-12-19", "2025-12-12", "2025-12-05", "2025-11-28", "2025-11-21", "2025-11-14", "2025-11-07", "2025-10-31", "2025-10-24"], "value": ["0.0", "0.0", "0.0", "0.0", "0.0", "0.0", "0.0", "0.0", "0.0", "0.0", "0.0", "0.0"], "rtime": ["2026-01-10 16:15:04", "2025-12-31 16:15:06", "2025-12-26 16:15:08", "2025-12-19 16:15:10", "2025-12-12 16:15:09", "2025-12-05 16:15:08", "2025-1...
+2026-01-16 11:35:13,601 - tools.ifind_tool - INFO - === 基差原始数据内容 ===
+2026-01-16 11:35:13,601 - tools.ifind_tool - INFO - 表格 1:
+2026-01-16 11:35:13,601 - tools.ifind_tool - INFO -   THS代码: N/A
+2026-01-16 11:35:13,601 - tools.ifind_tool - INFO -   数据类型: []
+2026-01-16 11:35:13,601 - tools.ifind_tool - INFO -   时间字段: ['2026-01-09', '2026-01-02', '2025-12-26', '2025-12-19', '2025-12-12', '2025-12-05', '2025-11-28', '2025-11-21', '2025-11-14', '2025-11-07']...
+2026-01-16 11:35:13,602 - tools.ifind_tool - INFO -   表格 1 完整数据: {
+  "id": [
+    "S004302825"
+  ],
+  "time": [
+    "2026-01-09",
+    "2026-01-02",
+    "2025-12-26",
+    "2025-12-19",
+    "2025-12-12",
+    "2025-12-05",
+    "2025-11-28",
+    "2025-11-21",
+    "2025-11-14",
+    "2025-11-07",
+    "2025-10-31",
+    "2025-10-24"
+  ],
+  "value": [
+    "0.0",
+    "0.0",
+    "0.0",
+    "0.0",
+    "0.0",
+    "0.0",
+    "0.0",
+    "0.0",
+    "0.0",
+    "0.0",
+    "0.0",
+    "0.0"
+  ],
+  "rtime": [
+    "2026-01-10 16:15:04",
+    "2025-12-31 16:15:06",
+    "2025-12-26 16:15:08",
+    "2025-12-19 16:15:10",
+    "2025-12-12 16:15:09",
+    "2025-12-05 16:15:08",
+    "2025-11-28 16:15:06",
+    "2025-11-21 16:15:04",
+    "2025-11-14 16:15:05",
+    "2025-11-07 16:15:05",
+    "2025-10-31 16:15:04",
+    "2025-10-24 16:15:03"
+  ],
+  "index_name": [
+    "期货库存:沥青:仓库:山东:中化弘润",
+    "期货库存:沥青:仓库:山东:中化弘润",
+    "期货库存:沥青:仓库:山东:中化弘润",
+    "期货库存:沥青:仓库:山东:中化弘润",
+    "期货库存:沥青:仓库:山东:中化弘润",
+    "期货库存:沥青:仓库:山东:中化弘润",
+    "期货库存:沥青:仓库:山东:中化弘润",
+    "期货库存:沥青:仓库:山东:中化弘润",
+    "期货库存:沥青:仓库:山东...
+2026-01-16 11:35:13,602 - tools.ifind_tool - INFO - 表格 2:
+2026-01-16 11:35:13,602 - tools.ifind_tool - INFO -   THS代码: N/A
+2026-01-16 11:35:13,602 - tools.ifind_tool - INFO -   数据类型: []
+2026-01-16 11:35:13,602 - tools.ifind_tool - INFO -   时间字段: ['2026-01-09', '2026-01-02', '2025-12-26', '2025-12-19', '2025-12-12', '2025-12-05', '2025-11-28', '2025-11-21', '2025-11-14', '2025-11-07']...
+2026-01-16 11:35:13,602 - tools.ifind_tool - INFO -   表格 2 完整数据: {
+  "id": [
+    "S004302857"
+  ],
+  "time": [
+    "2026-01-09",
+    "2026-01-02",
+    "2025-12-26",
+    "2025-12-19",
+    "2025-12-12",
+    "2025-12-05",
+    "2025-11-28",
+    "2025-11-21",
+    "2025-11-14",
+    "2025-11-07",
+    "2025-10-31",
+    "2025-10-24"
+  ],
+  "value": [
+    "11600.0",
+    "11600.0",
+    "11600.0",
+    "11600.0",
+    "11600.0",
+    "11600.0",
+    "11600.0",
+    "11600.0",
+    "11600.0",
+    "11600.0",
+    "11600.0",
+    "11600.0"
+  ],
+  "rtime": [
+    "2026-01-10 16:15:04",
+    "2025-12-31 16:15:06",
+    "2025-12-26 17:15:24",
+    "2025-12-19 16:15:10",
+    "2025-12-12 16:15:09",
+    "2025-12-05 18:15:23",
+    "2025-11-28 16:15:06",
+    "2025-11-21 18:15:07",
+    "2025-11-14 16:15:05",
+    "2025-11-07 16:15:05",
+    "2025-10-31 16:15:04",
+    "2025-10-24 16:15:03"
+  ],
+  "index_name": [
+    "可用库容量:沥青:仓库:安徽:环宇沥青",
+    "可用库容量:沥青:仓库:安徽:环宇沥青",
+    "可用库容量:沥青:仓库:安徽:环宇沥青",
+    "可用库容量:沥青:仓库:安徽:环宇沥青",
+    "可用库容量:沥青:仓库:安徽:环宇沥青",
+    "可用库容量:沥青:仓库:安徽:环宇沥青",
+    "可用库容量:沥青:仓库...
+2026-01-16 11:35:13,602 - tools.ifind_tool - INFO - 表格 3:
+2026-01-16 11:35:13,603 - tools.ifind_tool - INFO -   THS代码: N/A
+2026-01-16 11:35:13,603 - tools.ifind_tool - INFO -   数据类型: []
+2026-01-16 11:35:13,603 - tools.ifind_tool - INFO -   时间字段: []...
+2026-01-16 11:35:13,603 - tools.ifind_tool - INFO -   表格 3 完整数据: {
+  "id": [
+    "S006824536"
+  ],
+  "time": [],
+  "value": [],
+  "rtime": [],
+  "index_name": []
+}...
+2026-01-16 11:35:13,603 - tools.ifind_tool - INFO - 表格 4:
+2026-01-16 11:35:13,603 - tools.ifind_tool - INFO -   THS代码: N/A
+2026-01-16 11:35:13,603 - tools.ifind_tool - INFO -   数据类型: []
+2026-01-16 11:35:13,603 - tools.ifind_tool - INFO -   时间字段: []...
+2026-01-16 11:35:13,604 - tools.ifind_tool - INFO -   表格 4 完整数据: {
+  "id": [
+    "S006824532"
+  ],
+  "time": [],
+  "value": [],
+  "rtime": [],
+  "index_name": []
+}...
+2026-01-16 11:35:13,604 - tools.ifind_tool - INFO - 表格 5:
+2026-01-16 11:35:13,604 - tools.ifind_tool - INFO -   THS代码: N/A
+2026-01-16 11:35:13,604 - tools.ifind_tool - INFO -   数据类型: []
+2026-01-16 11:35:13,604 - tools.ifind_tool - INFO -   时间字段: ['2026-01-16', '2026-01-09', '2026-01-02', '2025-12-26', '2025-12-19', '2025-12-12', '2025-12-05', '2025-11-28', '2025-11-21', '2025-11-14']...
+2026-01-16 11:35:13,604 - tools.ifind_tool - INFO -   表格 5 完整数据: {
+  "id": [
+    "S004494136"
+  ],
+  "time": [
+    "2026-01-16",
+    "2026-01-09",
+    "2026-01-02",
+    "2025-12-26",
+    "2025-12-19",
+    "2025-12-12",
+    "2025-12-05",
+    "2025-11-28",
+    "2025-11-21",
+    "2025-11-14",
+    "2025-11-07",
+    "2025-10-31",
+    "2025-10-24"
+  ],
+  "value": [
+    "7.2",
+    "7.6",
+    "7.9",
+    "8.5",
+    "8.3",
+    "8.5",
+    "9.2",
+    "9.9",
+    "10.3",
+    "10.0",
+    "10.8",
+    "11.3",
+    "12.1"
+  ],
+  "rtime": [
+    "2026-01-13 02:29:04",
+    "2026-01-06 02:34:45",
+    "2025-12-30 02:36:17",
+    "2025-12-23 02:36:23",
+    "2025-12-16 02:33:41",
+    "2025-12-09 02:35:22",
+    "2025-12-02 02:35:33",
+    "2025-11-25 02:33:09",
+    "2025-11-18 02:32:55",
+    "2025-11-10 17:08:43",
+    "2025-11-04 02:38:06",
+    "2025-10-28 02:37:51",
+    "2025-10-21 00:43:21"
+  ],
+  "index_name": [
+    "社会库存:沥青:国内样本企业:华南地区:期末值",
+    "社会库存:沥青:国内样本企业:华南地区:期末值",
+    "社会库存:沥青:国内样本企业:华南地区:期末值",
+    "社会库存:沥青:国内样本企业:华南地区:期末值",
+    "社会库存:沥青:国内样本企业:华南地区:期末值",
+    "社会库存:...
+2026-01-16 11:35:13,604 - tools.ifind_tool - INFO - === 基差数据获取完成 ===
+2026-01-16 11:35:13,607 - zhipuai.api_resource.chat.completions - DEBUG - temperature:0.7, top_p:NOT_GIVEN
+2026-01-16 11:35:13,607 - zhipuai.api_resource.chat.completions - DEBUG - temperature:0.7, top_p:NOT_GIVEN
+2026-01-16 11:35:13,611 - httpcore.http11 - DEBUG - send_request_headers.started request=<Request [b'POST']>
+2026-01-16 11:35:13,613 - httpcore.http11 - DEBUG - send_request_headers.complete
+2026-01-16 11:35:13,614 - httpcore.http11 - DEBUG - send_request_body.started request=<Request [b'POST']>
+2026-01-16 11:35:13,615 - httpcore.http11 - DEBUG - send_request_body.complete
+2026-01-16 11:35:13,615 - httpcore.http11 - DEBUG - receive_response_headers.started request=<Request [b'POST']>
+2026-01-16 11:35:17,618 - urllib3.connectionpool - DEBUG - https://telemetry.crewai.com:4319 "POST /v1/traces HTTP/1.1" 200 2
+2026-01-16 11:35:18,114 - httpcore.http11 - DEBUG - receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Fri, 16 Jan 2026 03:35:18 GMT'), (b'Content-Type', b'application/json; charset=UTF-8'), (b'Transfer-Encoding', b'chunked'), (b'Connection', b'keep-alive'), (b'Vary', b'Accept-Encoding'), (b'Vary', b'Origin'), (b'Vary', b'Access-Control-Request-Method'), (b'Vary', b'Access-Control-Request-Headers'), (b'X-LOG-ID', b'20260116113513c23a0dc3eef243d7'), (b'Vary', b'Origin'), (b'Vary', b'Access-Control-Request-Method'), (b'Vary', b'Access-Control-Request-Headers'), (b'Strict-Transport-Security', b'max-age=31536000; includeSubDomains'), (b'Content-Encoding', b'gzip')])
+2026-01-16 11:35:18,115 - httpx - INFO - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+2026-01-16 11:35:18,115 - httpcore.http11 - DEBUG - receive_response_body.started request=<Request [b'POST']>
+2026-01-16 11:35:18,115 - httpcore.http11 - DEBUG - receive_response_body.complete
+2026-01-16 11:35:18,115 - httpcore.http11 - DEBUG - response_closed.started
+2026-01-16 11:35:18,116 - httpcore.http11 - DEBUG - response_closed.complete
+2026-01-16 11:35:18,116 - zhipuai.core._http_client - DEBUG - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "200 OK"
+2026-01-16 11:35:18,121 - zhipuai.api_resource.chat.completions - DEBUG - temperature:0.7, top_p:NOT_GIVEN
+2026-01-16 11:35:18,122 - zhipuai.api_resource.chat.completions - DEBUG - temperature:0.7, top_p:NOT_GIVEN
+2026-01-16 11:35:18,126 - httpcore.http11 - DEBUG - send_request_headers.started request=<Request [b'POST']>
+2026-01-16 11:35:18,127 - httpcore.http11 - DEBUG - send_request_headers.complete
+2026-01-16 11:35:18,127 - httpcore.http11 - DEBUG - send_request_body.started request=<Request [b'POST']>
+2026-01-16 11:35:18,127 - httpcore.http11 - DEBUG - send_request_body.complete
+2026-01-16 11:35:18,127 - httpcore.http11 - DEBUG - receive_response_headers.started request=<Request [b'POST']>
+2026-01-16 11:35:35,435 - httpcore.http11 - DEBUG - receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Fri, 16 Jan 2026 03:35:35 GMT'), (b'Content-Type', b'application/json; charset=UTF-8'), (b'Transfer-Encoding', b'chunked'), (b'Connection', b'keep-alive'), (b'Vary', b'Accept-Encoding'), (b'Vary', b'Origin'), (b'Vary', b'Access-Control-Request-Method'), (b'Vary', b'Access-Control-Request-Headers'), (b'X-LOG-ID', b'202601161135188c524337ceca4b06'), (b'Vary', b'Origin'), (b'Vary', b'Access-Control-Request-Method'), (b'Vary', b'Access-Control-Request-Headers'), (b'Strict-Transport-Security', b'max-age=31536000; includeSubDomains'), (b'Content-Encoding', b'gzip')])
+2026-01-16 11:35:35,435 - httpx - INFO - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+2026-01-16 11:35:35,435 - httpcore.http11 - DEBUG - receive_response_body.started request=<Request [b'POST']>
+2026-01-16 11:35:35,439 - httpcore.http11 - DEBUG - receive_response_body.complete
+2026-01-16 11:35:35,439 - httpcore.http11 - DEBUG - response_closed.started
+2026-01-16 11:35:35,439 - httpcore.http11 - DEBUG - response_closed.complete
+2026-01-16 11:35:35,439 - zhipuai.core._http_client - DEBUG - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "200 OK"
+2026-01-16 11:35:35,454 - config.logging_config - INFO - 分析流程完成
+2026-01-16 11:35:35,458 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (2): telemetry.crewai.com:4319
+2026-01-16 11:35:36,045 - urllib3.connectionpool - DEBUG - https://telemetry.crewai.com:4319 "POST /v1/traces HTTP/1.1" 200 2

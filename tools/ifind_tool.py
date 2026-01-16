@@ -1,4 +1,5 @@
-# tools/edt_data_tool_enhanced_fixed.py
+# tools/ifind_tools.py
+from crewai.tools import BaseTool
 from data_providers.ifind_http_client import IFinDHTTPClient
 from config.ifind_edb_mapping import IFindEDBMapping
 from typing import List, Dict, Any
@@ -9,10 +10,8 @@ import os
 
 logger = logging.getLogger(__name__)
 
-class EnhancedEDBDataToolFixed:
-    """
-    修复版EDB数据工具 - 不使用 @tool 装饰器，确保方法可直接调用
-    """
+class IFindDataFetcher:
+    """iFinD数据获取器 - 共享的底层实现"""
     
     def __init__(self):
         self.client = IFinDHTTPClient()
@@ -29,115 +28,7 @@ class EnhancedEDBDataToolFixed:
         logger.addHandler(file_handler)
         logger.setLevel(logging.DEBUG)
     
-    def get_basis_analysis_data(
-        self,
-        start_date: str,
-        end_date: str
-    ) -> str:
-        """获取基差分析所需的数据"""
-        try:
-            indicators = self.mapping.get_required_indicators('basis')
-            return self._get_edb_data_with_full_debug(indicators, start_date, end_date, "基差")
-        except Exception as e:
-            return f"❌ 基差分析：调用失败 - {str(e)}"
-    
-    def get_inventory_analysis_data(
-        self,
-        start_date: str,
-        end_date: str
-    ) -> str:
-        """获取库存分析所需的数据"""
-        try:
-            indicators = self.mapping.get_required_indicators('inventory')
-            return self._get_edb_data_with_full_debug(indicators, start_date, end_date, "库存")
-        except Exception as e:
-            return f"❌ 库存分析：调用失败 - {str(e)}"
-    
-    def get_supply_demand_analysis_data(
-        self,
-        start_date: str,
-        end_date: str
-    ) -> str:
-        """获取供需分析所需的数据"""
-        try:
-            indicators = self.mapping.get_required_indicators('supply_demand')
-            return self._get_edb_data_with_full_debug(indicators, start_date, end_date, "供需")
-        except Exception as e:
-            return f"❌ 供需分析：调用失败 - {str(e)}"
-    
-    def get_apparent_demand_analysis_data(
-        self,
-        start_date: str,
-        end_date: str
-    ) -> str:
-        """获取表观需求分析所需的数据"""
-        try:
-            indicators = self.mapping.get_required_indicators('apparent_demand')
-            return self._get_edb_data_with_full_debug(indicators, start_date, end_date, "表观需求")
-        except Exception as e:
-            return f"❌ 表观需求分析：调用失败 - {str(e)}"
-    
-    def get_demand_forecasting_data(
-        self,
-        start_date: str,
-        end_date: str
-    ) -> str:
-        """获取需求预测所需的数据"""
-        try:
-            indicators = self.mapping.get_required_indicators('demand_forecasting')
-            return self._get_edb_data_with_full_debug(indicators, start_date, end_date, "需求预测")
-        except Exception as e:
-            return f"❌ 需求预测：调用失败 - {str(e)}"
-    
-    def get_macro_economic_data(
-        self,
-        start_date: str,
-        end_date: str
-    ) -> str:
-        """获取宏观经济分析所需的数据"""
-        try:
-            indicators = self.mapping.get_required_indicators('macro_economic')
-            return self._get_edb_data_with_full_debug(indicators, start_date, end_date, "宏观经济")
-        except Exception as e:
-            return f"❌ 宏观经济分析：调用失败 - {str(e)}"
-    
-    def get_price_technical_data(
-        self,
-        start_date: str,
-        end_date: str
-    ) -> str:
-        """获取价格技术分析所需的数据"""
-        try:
-            indicators = self.mapping.get_required_indicators('price_technical')
-            return self._get_edb_data_with_full_debug(indicators, start_date, end_date, "价格技术")
-        except Exception as e:
-            return f"❌ 价格技术分析：调用失败 - {str(e)}"
-    
-    def get_quant_strategy_data(
-        self,
-        start_date: str,
-        end_date: str
-    ) -> str:
-        """获取量化策略所需的数据"""
-        try:
-            indicators = self.mapping.get_required_indicators('quant_strategy')
-            return self._get_edb_data_with_full_debug(indicators, start_date, end_date, "量化策略")
-        except Exception as e:
-            return f"❌ 量化策略：调用失败 - {str(e)}"
-    
-    def get_trading_data(
-        self,
-        start_date: str,
-        end_date: str
-    ) -> str:
-        """获取交易执行所需的数据"""
-        try:
-            indicators = self.mapping.get_required_indicators('trading')
-            return self._get_edb_data_with_full_debug(indicators, start_date, end_date, "交易执行")
-        except Exception as e:
-            return f"❌ 交易执行：调用失败 - {str(e)}"
-    
-    def _get_edb_data_with_full_debug(
+    def get_edb_data_with_debug(
         self,
         indicators: List[str],
         start_date: str,
@@ -198,27 +89,27 @@ class EnhancedEDBDataToolFixed:
             
         except Exception as e:
             error_msg = f"❌ {analysis_type}分析：获取数据失败 - {str(e)}"
-            logger.exception(f"数据获取异常: {e}")  # 记录完整堆栈
+            logger.exception(f"数据获取异常: {e}")
             return error_msg
     
     def _log_all_data_content(self, tables: List[Dict], analysis_type: str):
         """强制记录所有数据内容"""
         logger.info(f"=== {analysis_type}原始数据内容 ===")
         
-        for i, table in enumerate(tables[:5]):  # 记录前5个表格
+        for i, table in enumerate(tables[:5]):
             logger.info(f"表格 {i+1}:")
             logger.info(f"  THS代码: {table.get('thscode', 'N/A')}")
             logger.info(f"  数据类型: {table.get('datatype', [])}")
-            logger.info(f"  时间字段: {table.get('time', [])[:10]}...")  # 前10个时间点
+            logger.info(f"  时间字段: {table.get('time', [])[:10]}...")
             
             if "table" in table and table["table"]:
                 values_dict = table["table"]
                 logger.info(f"  指标数量: {len(values_dict)}")
                 
-                for indicator_key, values in list(values_dict.items())[:3]:  # 前3个指标
+                for indicator_key, values in list(values_dict.items())[:3]:
                     if isinstance(values, list):
                         valid_values = [v for v in values if v is not None]
-                        logger.info(f"  指标 {indicator_key}: {valid_values[:20]}...")  # 前20个值
+                        logger.info(f"  指标 {indicator_key}: {valid_values[:20]}...")
                     else:
                         logger.info(f"  指标 {indicator_key}: {values}")
             
@@ -229,7 +120,6 @@ class EnhancedEDBDataToolFixed:
         summary_parts = [f"✅ {analysis_type}分析：获取到 {len(tables)} 个指标"]
         
         total_data_points = 0
-        sample_tables = []
         
         for i, table in enumerate(tables[:3]):
             if "table" in table and table["table"]:
@@ -244,17 +134,101 @@ class EnhancedEDBDataToolFixed:
                             latest_value = valid_values[-1]
                             avg_value = sum(valid_values) / len(valid_values)
                             
-                            # 添加样本数据
-                            sample_values = valid_values[-5:]  # 最近5个值
-                            sample_tables.append(f"     • 样本: {sample_values}")
-                            
                             summary_parts.append(f"   • 指标{i+1}: {len(valid_values)}个数据点")
                             summary_parts.append(f"     • 最新值={latest_value:.2f}, 均值={avg_value:.2f}")
-                            
-                            # 添加样本数据到摘要
-                            summary_parts.extend(sample_tables)
         
         summary_parts.append(f"   • 总计: {total_data_points}个有效数据点")
         summary_parts.append(f"   • 时间范围: {start_date} 至 {end_date}")
         
         return "\n".join(summary_parts)
+
+
+# 具体的工具类
+class BasisAnalysisTool(BaseTool):
+    name: str = "获取EDB数据用于基差分析"
+    description: str = "获取基差分析所需的数据"
+    
+    def _run(self, start_date: str, end_date: str) -> str:
+        fetcher = IFindDataFetcher()
+        indicators = fetcher.mapping.get_required_indicators('basis')
+        return fetcher.get_edb_data_with_debug(indicators, start_date, end_date, "基差")
+
+
+class InventoryAnalysisTool(BaseTool):
+    name: str = "获取EDB数据用于库存分析"
+    description: str = "获取库存分析所需的数据"
+    
+    def _run(self, start_date: str, end_date: str) -> str:
+        fetcher = IFindDataFetcher()
+        indicators = fetcher.mapping.get_required_indicators('inventory')
+        return fetcher.get_edb_data_with_debug(indicators, start_date, end_date, "库存")
+
+
+class SupplyDemandAnalysisTool(BaseTool):
+    name: str = "获取EDB数据用于供需分析"
+    description: str = "获取供需分析所需的数据"
+    
+    def _run(self, start_date: str, end_date: str) -> str:
+        fetcher = IFindDataFetcher()
+        indicators = fetcher.mapping.get_required_indicators('supply_demand')
+        return fetcher.get_edb_data_with_debug(indicators, start_date, end_date, "供需")
+
+
+class ApparentDemandAnalysisTool(BaseTool):
+    name: str = "获取EDB数据用于表观需求分析"
+    description: str = "获取表观需求分析所需的数据"
+    
+    def _run(self, start_date: str, end_date: str) -> str:
+        fetcher = IFindDataFetcher()
+        indicators = fetcher.mapping.get_required_indicators('apparent_demand')
+        return fetcher.get_edb_data_with_debug(indicators, start_date, end_date, "表观需求")
+
+
+class DemandForecastingTool(BaseTool):
+    name: str = "获取EDB数据用于需求预测"
+    description: str = "获取需求预测所需的数据"
+    
+    def _run(self, start_date: str, end_date: str) -> str:
+        fetcher = IFindDataFetcher()
+        indicators = fetcher.mapping.get_required_indicators('demand_forecasting')
+        return fetcher.get_edb_data_with_debug(indicators, start_date, end_date, "需求预测")
+
+
+class MacroEconomicAnalysisTool(BaseTool):
+    name: str = "获取EDB数据用于宏观经济分析"
+    description: str = "获取宏观经济分析所需的数据"
+    
+    def _run(self, start_date: str, end_date: str) -> str:
+        fetcher = IFindDataFetcher()
+        indicators = fetcher.mapping.get_required_indicators('macro_economic')
+        return fetcher.get_edb_data_with_debug(indicators, start_date, end_date, "宏观经济")
+
+
+class PriceTechnicalAnalysisTool(BaseTool):
+    name: str = "获取EDB数据用于价格技术分析"
+    description: str = "获取价格技术分析所需的数据"
+    
+    def _run(self, start_date: str, end_date: str) -> str:
+        fetcher = IFindDataFetcher()
+        indicators = fetcher.mapping.get_required_indicators('price_technical')
+        return fetcher.get_edb_data_with_debug(indicators, start_date, end_date, "价格技术")
+
+
+class QuantStrategyAnalysisTool(BaseTool):
+    name: str = "获取EDB数据用于量化策略"
+    description: str = "获取量化策略所需的数据"
+    
+    def _run(self, start_date: str, end_date: str) -> str:
+        fetcher = IFindDataFetcher()
+        indicators = fetcher.mapping.get_required_indicators('quant_strategy')
+        return fetcher.get_edb_data_with_debug(indicators, start_date, end_date, "量化策略")
+
+
+class TradingAnalysisTool(BaseTool):
+    name: str = "获取EDB数据用于交易执行"
+    description: str = "获取交易执行所需的数据"
+    
+    def _run(self, start_date: str, end_date: str) -> str:
+        fetcher = IFindDataFetcher()
+        indicators = fetcher.mapping.get_required_indicators('trading')
+        return fetcher.get_edb_data_with_debug(indicators, start_date, end_date, "交易执行")
