@@ -1,3 +1,4 @@
+# tasks/inventory_analysis_task.py
 from typing import Optional
 from crewai import Task
 from datetime import datetime  # 1. 导入 datetime 模块

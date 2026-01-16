@@ -1,0 +1,29 @@
+[ctp]
+  username = "240298"
+  password = "19690632Zx!"
+  broker_id = "9999"
+  product_name = "simnow_client_test"
+  auth_code = "0000000000000000"
+  environment = "模拟"
+  trade_server = "182.254.243.31:30001"
+  market_server = "182.254.243.31:30011"
+
+[ctp.accounts]
+  "default" = { username = "240298", password = "19690632Zx!", broker_id = "9999", enabled = true }
+  "paper_trading" = { username = "240299", password = "19690632Zx!", broker_id = "9999", enabled = false }
+
+[xtp]
+  client_id = 1
+  trade_server = "xtp-trade-server.com"
+  market_server = "xtp-market-server.com"
+
+[xtp.accounts]
+  "xtp_paper" = { client_id = 1, enabled = true }
+  "xtp_real" = { client_id = 2, enabled = false }
+
+[binance]
+  testnet = true
+
+[binance.accounts]
+  "binance_test" = { enabled = true }
+  "binance_main" = { enabled = false }

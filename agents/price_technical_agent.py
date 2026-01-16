@@ -3,6 +3,7 @@
 from crewai import Agent
 from llm_config.factory import get_llm
 from tools.data_fetching_tool import DataFetchingTool
+from tools.market_data_tool import MarketDataTool
 from tools.zhipu_web_search_tool import ZhipuWebSearchTool
 from dotenv import find_dotenv, load_dotenv
 
@@ -19,7 +20,7 @@ qwen_llm = get_llm("qwen")
 # # 加载环境变量
 # load_dotenv()
 # 实例化工具
-data_tool = DataFetchingTool()
+data_tool = MarketDataTool()
 web_search_tool = ZhipuWebSearchTool()
 
 price_technical_analyst = Agent(
