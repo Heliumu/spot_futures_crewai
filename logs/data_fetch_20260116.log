@@ -93,3 +93,4 @@
 2026-01-16 02:05:41,607 - config.logging_config - INFO - 分析流程完成
 2026-01-16 02:05:41,615 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (2): telemetry.crewai.com:4319
 2026-01-16 02:05:42,466 - urllib3.connectionpool - DEBUG - https://telemetry.crewai.com:4319 "POST /v1/traces HTTP/1.1" 200 2
+2026-01-16 09:11:55,926 - config.logging_config - INFO - 调试版分析工作流初始化完成

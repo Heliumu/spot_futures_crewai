@@ -10,4 +10,8 @@ crews/
 example/
 config.toml
 
-# test_*/
+test_*/
+logs/
+
+zhibiao/
+数据名.txt
