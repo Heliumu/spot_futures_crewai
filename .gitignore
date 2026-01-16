@@ -10,4 +10,4 @@ crews/
 example/
 config.toml
 
-test_*/
+# test_*/
